@@ -13,7 +13,7 @@ class Investment(Named):
         self.isin = isin
         self.enabled = enabled
         self.quantity = quantity
-        self.current_value = quantity * sharepp.parse_price(isin)
+        self.current_value = 0.0
         self.investment_value = 0.0
 
     def __str__(self):
@@ -36,3 +36,6 @@ class Investment(Named):
 
     def __lt__(self, other) -> bool:
         return self.current_value > other.current_value
+
+    def calculate_current_value(self):
+        self.current_value = self.quantity * sharepp.parse_price(self.isin)
