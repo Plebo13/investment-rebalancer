@@ -36,12 +36,10 @@ def create_new_configuration():
     Configuration.write_configuration()
 
 
+# Script starts here
 if not Configuration.config_available():
     create_new_configuration()
 
 Configuration.read()
-for classification in Configuration.classifications:
-    print(classification)
-
-for investment in Configuration.investments:
-    print(investment)
+investment_amount = float(
+    input("How much money do you want to invest? ").strip)
