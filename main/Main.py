@@ -1,4 +1,4 @@
-from main.controller import Configuration
+from main.controller import Configuration, Rebalancer
 from main.model.Category import Category
 from main.model.TERInvestment import TERInvestment
 
@@ -41,5 +41,12 @@ if not Configuration.config_available():
     create_new_configuration()
 
 Configuration.read()
-investment_amount = float(
-    input("How much money do you want to invest? ").strip)
+Rebalancer.calculate_current_values()
+
+investment_value = float(input("How much money do you want to invest? ").strip())
+
+for classification in Configuration.classifications:
+    classification.calculate_target_values(investment_value)
+
+for classification in Configuration.classifications:
+    print(classification)

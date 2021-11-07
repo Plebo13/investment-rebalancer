@@ -1,8 +1,8 @@
 import json
 import os
+from typing import Dict, List
+
 from main.model.Category import Category
-
-
 from main.model.Classification import Classification
 from main.model.Investment import Investment
 from main.model.NamedList import NamedList
@@ -10,8 +10,9 @@ from main.model.TERInvestment import TERInvestment
 
 CONFIG_PATH = "config.json"
 
-classifications: NamedList[Classification] = []
-investments: NamedList[Investment] = []
+classifications: NamedList[Classification] = NamedList()
+categories: NamedList[Category] = NamedList()
+investments: Dict[Investment, NamedList[Category]] = dict()
 
 
 def config_available() -> bool:
@@ -32,6 +33,14 @@ def add_classification(classification: Classification):
         classifications.append(classification)
 
 
+def get_investments(category: Category) -> List:
+    result: List[Investment] = []
+    for investment in investments:
+        if investments[investment].contains(category.name):
+            result.append(investment)
+    return result
+
+
 def read():
     with open(CONFIG_PATH) as configuration_file:
         config = json.load(configuration_file)
@@ -46,6 +55,7 @@ def read():
             category_config = categories_config[category_str]
             category = Category(category_str, category_config["percentage"])
             classification.categories.append(category)
+            categories.append(category)
 
         classifications.append(classification)
 
@@ -54,7 +64,8 @@ def read():
     for investment_str in investments_config:
         name = investments_config[investment_str]["name"]
         quantity = investments_config[investment_str]["quantity"]
-        categories = investments_config[investment_str]["categories"]
+        categories_str = investments_config[investment_str]["categories"].split(
+            ",")
         if "ter" in investments_config[investment_str]:
             ter = investments_config[investment_str]["ter"]
             investment = TERInvestment(investment_str, name, quantity, ter)
@@ -62,8 +73,11 @@ def read():
         else:
             investment = Investment(investment_str, name, quantity)
 
-        investment.add_categories(categories)
-        investments.append(investment)
+        categories_named_list: NamedList[Category] = NamedList()
+        for category_str in categories_str:
+            categories_named_list.append(categories.get(category_str))
+
+        investments[investment] = categories_named_list
 
 
 def write_classification(classification: Classification, config):
@@ -82,13 +96,12 @@ def write_investment(investment: Investment, config):
 
     categories_str = ""
     for category in investment.categories:
-        categories_str += category+","
+        categories_str += category + ","
     config[investment.isin]["categories"] = categories_str.strip(",")
 
 
 def write_configuration():
-    config = {}
-    config["classifications"] = {}
+    config = {"classifications": {}}
     for classification in classifications:
         write_classification(classification, config["classifications"])
 
