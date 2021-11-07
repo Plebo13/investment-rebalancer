@@ -14,7 +14,6 @@ def create_new_configuration():
             input("Classification: ").strip())
 
         category = Category(name, percentage)
-        Configuration.categories.append(category)
         classification.categories.append(category)
         user_input = input(
             "Do you want to add another category? (Y/n) ").strip()
@@ -39,3 +38,10 @@ def create_new_configuration():
 
 if not Configuration.config_available():
     create_new_configuration()
+
+Configuration.read()
+for classification in Configuration.classifications:
+    print(classification)
+
+for investment in Configuration.investments:
+    print(investment)

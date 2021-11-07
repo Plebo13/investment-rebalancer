@@ -17,6 +17,9 @@ class Category(Named):
             return False
         return o.name == self.name
 
+    def __str__(self) -> str:
+        return self.name+": "+str(self.percentage)
+
     def get_value(self) -> float:
         value = 0.0
         for investment in self.investments:

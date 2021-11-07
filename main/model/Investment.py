@@ -16,7 +16,11 @@ class Investment(Named):
         self.categories: List[str] = []
 
     def __str__(self):
-        return self.name
+        result = self.isin
+        result += "\n    Name: "+self.name
+        value_str = "{value: .2f}€"
+        result += "\n    Value: "+value_str.format(value=self.current_value)
+        return result
 
     def __eq__(self, other: object) -> bool:
         if other == self:
