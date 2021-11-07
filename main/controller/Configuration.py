@@ -1,15 +1,16 @@
+import json
 import os
-import configparser
 
+from main.model.NamedList import NamedList
 from main.model.Category import Category
 from main.model.Classification import Classification
 from main.model.Investment import Investment
+from main.model.TERInvestment import TERInvestment
 
-CONFIG_PATH = "config.cfg"
-categories = list()
-classifications = list()
-investments = list()
-ter_investments = list()
+CONFIG_PATH = "config.json"
+classifications: NamedList[Classification] = []
+categories: NamedList[Category] = []
+investments: NamedList[Investment] = []
 
 
 def config_available() -> bool:
@@ -35,32 +36,35 @@ def add_category(category: Category):
         categories.append(category)
 
 
+def write_classification(classification: Classification, config):
+    config[classification.name] = {}
+
+    for category in classification.categories:
+        config[classification.name][category.name] = {}
+        config[classification.name][category.name]["percentage"] = category.percentage
+
+
+def write_investment(investment: Investment, config):
+    config[investment.isin] = {
+        "name": investment.name, "quantity": investment.quantity}
+    if isinstance(investment, TERInvestment):
+        config[investment.isin]["ter"] = investment.ter
+
+    categories_str = ""
+    for category in investment.categories:
+        categories_str += category+","
+    config[investment.isin]["categories"] = categories_str.strip(",")
+
+
 def write_configuration():
-    config = configparser.ConfigParser()
+    config = {}
+    config["classifications"] = {}
     for classification in classifications:
-        assert isinstance(classification, Classification)
-        config[classification.name] = {}
-        config[classification.name]['type'] = 'classification'
+        write_classification(classification, config["classifications"])
 
-        categories_str = ""
-        for category in classification.categories:
-            assert isinstance(category, Category)
-            categories_str += category.name + ","
-        categories_str = categories_str.strip(',')
-        config[classification.name]['categories'] = categories_str
-
-    for category in categories:
-        assert isinstance(category, Category)
-        config[category.name] = {}
-        config[category.name]['type'] = 'category'
-        config[category.name]['percentage'] = str(category.percentage)
-
-        investments_str = ""
-        for investment in category.investments:
-            assert isinstance(investment, Investment)
-            investments_str += investment.name + ","
-        investments_str = investments_str.strip(',')
-        config[category.name]['investments'] = investments_str
+    config["investments"] = {}
+    for investment in investments:
+        write_investment(investment, config["investments"])
 
     with open(CONFIG_PATH, 'w') as configfile:
-        config.write(configfile)
+        json.dump(config, configfile)

@@ -1,11 +1,14 @@
-class Category:
-    name: str
-    percentage: float
-    investments = list()
+from main.model.Investment import Investment
+from main.model.Named import Named
+from typing import List
+
+
+class Category(Named):
 
     def __init__(self, name: str, percentage: float) -> None:
-        self.name = name
+        super().__init__(name)
         self.percentage = percentage
+        self.investments: List[Investment] = []
 
     def __eq__(self, o: object) -> bool:
         if o == self:
@@ -19,3 +22,6 @@ class Category:
         for investment in self.investments:
             value = value + investment.current_value
         return value
+
+    def is_valid(self) -> bool:
+        return len(self.investments) > 0
