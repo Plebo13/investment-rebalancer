@@ -63,15 +63,16 @@ def read():
     investments_config = config["investments"]
     for investment_str in investments_config:
         name = investments_config[investment_str]["name"]
+        enabled = investments_config[investment_str]["enabled"]
         quantity = investments_config[investment_str]["quantity"]
         categories_str = investments_config[investment_str]["categories"].split(
             ",")
         if "ter" in investments_config[investment_str]:
             ter = investments_config[investment_str]["ter"]
-            investment = TERInvestment(investment_str, name, quantity, ter)
+            investment = TERInvestment(investment_str, enabled, name, quantity, ter)
 
         else:
-            investment = Investment(investment_str, name, quantity)
+            investment = Investment(investment_str, enabled, name, quantity)
 
         categories_named_list: NamedList[Category] = NamedList()
         for category_str in categories_str:

@@ -8,17 +8,20 @@ from main.model.Named import Named
 class Investment(Named):
     investment_sum: float
 
-    def __init__(self, isin: str, name: str, quantity: float):
+    def __init__(self, isin: str, enabled: bool, name: str, quantity: float):
         super().__init__(name)
         self.isin = isin
+        self.enabled = enabled
         self.quantity = quantity
         self.current_value = quantity * sharepp.parse_price(isin)
+        self.investment_value = 0.0
 
     def __str__(self):
-        result = self.isin
-        result += "\n    Name: " + self.name
+        result = self.name
+        result += "\n    ISIN: " + self.isin
         value_str = "{value: .2f}€"
-        result += "\n    Value: " + value_str.format(value=self.current_value)
+        result += "\n    Current value: " + value_str.format(value=self.current_value)
+        result += "\n    Investment value: " + value_str.format(value=self.investment_value)
         return result
 
     def __eq__(self, other: object) -> bool:

@@ -48,5 +48,8 @@ investment_value = float(input("How much money do you want to invest? ").strip()
 for classification in Configuration.classifications:
     classification.calculate_target_values(investment_value)
 
-for classification in Configuration.classifications:
-    print(classification)
+Rebalancer.rebalance()
+
+for investment in Configuration.investments:
+    if investment.investment_value > 0:
+        print(investment)

@@ -7,8 +7,8 @@ class Category(Named):
         super().__init__(name)
         self.percentage = percentage
         self.current_value = 0.0
-        self.delta_value=0.0
-        self.investment_value=0.0
+        self.delta_value = 0.0
+        self.investment_value = 0.0
 
     def __eq__(self, o: object) -> bool:
         if o == self:
