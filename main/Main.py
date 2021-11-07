@@ -27,7 +27,7 @@ def create_new_configuration():
         ter = float(input("TER: ").strip())
         categories = input("Categories: ").strip()
 
-        investment = TERInvestment(isin, name, quantity, ter)
+        investment = TERInvestment(isin, True, name, quantity, ter)
         investment.add_categories(categories)
         Configuration.investments.append(investment)
         user_input = input(
