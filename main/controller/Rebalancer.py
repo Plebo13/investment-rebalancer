@@ -4,13 +4,6 @@ from main.model import Investment
 
 def calculate_current_values():
     print("Calculating current investment values...")
-    for category in Configuration.categories:
-        for investment in Configuration.get_investments(category):
-            category.current_value += investment.current_value
-
-    for classification in Configuration.classifications:
-        classification.calculate_current_value()
-
     i = 0
     for investment in Configuration.investments:
         investment.calculate_current_value()
@@ -18,6 +11,13 @@ def calculate_current_values():
         progress = i / len(Configuration.investments) * 100
         progress_str = "{progress:.2f}%"
         print(progress_str.format(progress=progress))
+
+    for category in Configuration.categories:
+        for investment in Configuration.get_investments(category):
+            category.current_value += investment.current_value
+
+    for classification in Configuration.classifications:
+        classification.calculate_current_value()
 
 
 def rebalance():
