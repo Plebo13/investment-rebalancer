@@ -1,0 +1,50 @@
+{
+  "classifications": {
+    "Regions": {
+      "Developed World": {
+        "percentage": 70.0
+      },
+      "Emerging Markets": {
+        "percentage": 30.0
+      }
+    },
+    "Factor": {
+      "Large Cap": {
+        "percentage": 85.0
+      },
+      "Small Cap": {
+        "percentage": 15.0
+      }
+    }
+  },
+  "investments": {
+    "LU1781541179": {
+      "name": "Lyxor Core MSCI World",
+      "enabled": true,
+      "quantity": 200,
+      "ter": 0.12,
+      "categories": "Developed World,Large Cap"
+    },
+    "LU0635178014": {
+      "name": "Lyxor MSCI Emerging Markets",
+      "enabled": true,
+      "quantity": 50,
+      "ter": 0.14,
+      "categories": "Emerging Markets,Large Cap"
+    },
+    "IE00BF4RFH31": {
+      "name": "iShares MSCI World Small Cap",
+      "enabled": true,
+      "quantity": 65,
+      "ter": 0.35,
+      "categories": "Developed World,Small Cap"
+    },
+    "IE00B48X4842": {
+      "name": "SPDR MSCI Emerging Markets Small Cap",
+      "enabled": true,
+      "quantity": 2,
+      "ter": 0.55,
+      "categories": "Emerging Markets,Small Cap"
+    }
+  }
+}
