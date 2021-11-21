@@ -1,16 +1,14 @@
+from prompt_toolkit.shortcuts import ProgressBar
+
 from main.controller import Configuration
 from main.model import Investment
 
 
 def calculate_current_values():
-    print("Calculating current investment values...")
-    i = 0
-    for investment in Configuration.investments:
-        investment.calculate_current_value()
-        i += 1
-        progress = i / len(Configuration.investments) * 100
-        progress_str = "{progress:.2f}%"
-        print(progress_str.format(progress=progress))
+    with ProgressBar(title="Calculating current values") as progress_bar:
+        investments = Configuration.investments.keys()
+        for investment in progress_bar(investments, total=len(investments)):
+            investment.calculate_current_value()
 
     for category in Configuration.categories:
         for investment in Configuration.get_investments(category):
@@ -25,8 +23,6 @@ def rebalance():
         investments = Configuration.get_investments(category)
         investments.sort(reverse=True)
 
-        print(category.name + ": " + str(category.investment_value))
-
         for investment in investments:
             if investment.enabled:
                 smallest_delta = get_smallest_delta(investment)
@@ -38,8 +34,6 @@ def rebalance():
                     investment.investment_value += smallest_delta
                     for investment_category in Configuration.investments.get(investment):
                         investment_category.investment_value -= smallest_delta
-            else:
-                print("Skipping " + investment.name)
 
 
 def get_smallest_delta(investment: Investment) -> float:

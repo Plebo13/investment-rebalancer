@@ -1,6 +1,8 @@
 from functools import total_ordering
 
 import sharepp
+from prompt_toolkit import print_formatted_text, HTML
+
 from main.model.Named import Named
 
 
@@ -15,14 +17,6 @@ class Investment(Named):
         self.quantity = quantity
         self.current_value = 0.0
         self.investment_value = 0.0
-
-    def __str__(self):
-        result = self.name
-        result += "\n    ISIN: " + self.isin
-        value_str = "{value: .2f}€"
-        result += "\n    Current value: " + value_str.format(value=self.current_value)
-        result += "\n    Investment value: " + value_str.format(value=self.investment_value)
-        return result
 
     def __eq__(self, other: object) -> bool:
         if other == self:
@@ -39,3 +33,11 @@ class Investment(Named):
 
     def calculate_current_value(self):
         self.current_value = self.quantity * sharepp.parse_price(self.isin)
+
+    def print(self):
+        value_str = "{value:.2f}€"
+        print_formatted_text(HTML(""))
+        print_formatted_text(HTML("<b>" + self.name + "</b>"))
+        print_formatted_text(HTML("ISIN: " + self.isin))
+        print_formatted_text(HTML("Current value: " + value_str.format(value=self.current_value)))
+        print_formatted_text(HTML("Investment value: <u>" + value_str.format(value=self.investment_value) + "</u>"))
