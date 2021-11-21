@@ -23,15 +23,19 @@ def rebalance():
         investments = Configuration.get_investments(category)
         investments.sort(reverse=True)
 
+        print(category.name + ": " + str(category.investment_value))
+
         for investment in investments:
             if investment.enabled:
                 smallest_delta = get_smallest_delta(investment)
                 if category.investment_value < smallest_delta:
                     investment.investment_value += category.investment_value
-                    category.investment_value = 0.0
+                    for investment_category in Configuration.investments.get(investment):
+                        investment_category.investment_value -= category.investment_value
                 else:
                     investment.investment_value += smallest_delta
-                    category.investment_value -= smallest_delta
+                    for investment_category in Configuration.investments.get(investment):
+                        investment_category.investment_value -= smallest_delta
             else:
                 print("Skipping " + investment.name)
 
