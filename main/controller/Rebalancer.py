@@ -5,7 +5,7 @@ from main.model import Investment
 
 
 def calculate_current_values():
-    with ProgressBar(title="Calculating current investment values...") as progress_bar:
+    with ProgressBar(title="Calculating current values") as progress_bar:
         investments = Configuration.investments.keys()
         for investment in progress_bar(investments, total=len(investments)):
             investment.calculate_current_value()
@@ -23,8 +23,6 @@ def rebalance():
         investments = Configuration.get_investments(category)
         investments.sort(reverse=True)
 
-        print(category.name + ": " + str(category.investment_value))
-
         for investment in investments:
             if investment.enabled:
                 smallest_delta = get_smallest_delta(investment)
@@ -36,8 +34,6 @@ def rebalance():
                     investment.investment_value += smallest_delta
                     for investment_category in Configuration.investments.get(investment):
                         investment_category.investment_value -= smallest_delta
-            else:
-                print("Skipping " + investment.name)
 
 
 def get_smallest_delta(investment: Investment) -> float:
