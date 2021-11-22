@@ -6,6 +6,7 @@ class Category(Named):
     def __init__(self, name: str, percentage: float) -> None:
         super().__init__(name)
         self.percentage = percentage
+        self.current_percentage = 0.0
         self.current_value = 0.0
         self.delta_value = 0.0
         self.investment_value = 0.0
