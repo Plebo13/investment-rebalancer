@@ -1,6 +1,7 @@
+from typing import List
+
 from main.model.Category import Category
 from main.model.Named import Named
-from typing import List
 
 
 class Classification(Named):
@@ -39,3 +40,10 @@ class Classification(Named):
                 else:
                     category.investment_value += category.delta_value
                     investment_value -= category.delta_value
+
+    def is_valid(self) -> bool:
+        percentage = 0.0
+        for category in self.categories:
+            percentage += category.percentage
+
+        return percentage == 100.0
