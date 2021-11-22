@@ -9,15 +9,15 @@ from main.model.NamedList import NamedList
 from main.model.TERInvestment import TERInvestment
 from main.model.exception.ConfigurationException import ConfigurationException
 
-CONFIG_PATH = "config.json"
+DEFAULT_CONFIG_PATH = "config.json"
 
 classifications: NamedList[Classification] = NamedList()
 categories: NamedList[Category] = NamedList()
 investments: Dict[Investment, NamedList[Category]] = dict()
 
 
-def config_available() -> bool:
-    return os.path.isfile(CONFIG_PATH)
+def config_available(config_path=DEFAULT_CONFIG_PATH) -> bool:
+    return os.path.isfile(config_path)
 
 
 def get_investments(category: Category) -> List:
@@ -28,8 +28,8 @@ def get_investments(category: Category) -> List:
     return result
 
 
-def read():
-    with open(CONFIG_PATH) as configuration_file:
+def read(config_path=DEFAULT_CONFIG_PATH):
+    with open(config_path) as configuration_file:
         config = json.load(configuration_file)
 
     # Read all classifications
