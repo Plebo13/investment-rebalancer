@@ -7,30 +7,17 @@ from main.model.Classification import Classification
 from main.model.Investment import Investment
 from main.model.NamedList import NamedList
 from main.model.TERInvestment import TERInvestment
+from main.model.exception.ConfigurationException import ConfigurationException
 
-CONFIG_PATH = "config.json"
+DEFAULT_CONFIG_PATH = "config.json"
 
 classifications: NamedList[Classification] = NamedList()
 categories: NamedList[Category] = NamedList()
 investments: Dict[Investment, NamedList[Category]] = dict()
 
 
-def config_available() -> bool:
-    return os.path.isfile(CONFIG_PATH)
-
-
-def get_classification(name: str) -> Classification:
-    for classification in classifications:
-        if classification.name == name:
-            return classification
-    new_classification = Classification(name)
-    classifications.append(new_classification)
-    return new_classification
-
-
-def add_classification(classification: Classification):
-    if classification not in classifications:
-        classifications.append(classification)
+def config_available(config_path=DEFAULT_CONFIG_PATH) -> bool:
+    return os.path.isfile(config_path)
 
 
 def get_investments(category: Category) -> List:
@@ -41,8 +28,8 @@ def get_investments(category: Category) -> List:
     return result
 
 
-def read():
-    with open(CONFIG_PATH) as configuration_file:
+def read(config_path=DEFAULT_CONFIG_PATH):
+    with open(config_path) as configuration_file:
         config = json.load(configuration_file)
 
     # Read all classifications
@@ -80,35 +67,7 @@ def read():
 
         investments[investment] = categories_named_list
 
-
-def write_classification(classification: Classification, config):
-    config[classification.name] = {}
-
-    for category in classification.categories:
-        config[classification.name][category.name] = {}
-        config[classification.name][category.name]["percentage"] = category.percentage
-
-
-def write_investment(investment: Investment, config):
-    config[investment.isin] = {
-        "name": investment.name, "quantity": investment.quantity}
-    if isinstance(investment, TERInvestment):
-        config[investment.isin]["ter"] = investment.ter
-
-    categories_str = ""
-    for category in investment.categories:
-        categories_str += category + ","
-    config[investment.isin]["categories"] = categories_str.strip(",")
-
-
-def write_configuration():
-    config = {"classifications": {}}
-    for classification in classifications:
-        write_classification(classification, config["classifications"])
-
-    config["investments"] = {}
-    for investment in investments:
-        write_investment(investment, config["investments"])
-
-    with open(CONFIG_PATH, 'w') as configuration_file:
-        json.dump(config, configuration_file)
+        for classification in classifications:
+            if not classification.is_valid():
+                error_message = "The sum of all percentages in classification '{classification:s}' is not 100!"
+                raise ConfigurationException(error_message.format(classification=classification.name))
