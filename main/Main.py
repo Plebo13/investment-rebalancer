@@ -15,7 +15,7 @@ Rebalancer.calculate_current_values()
 for classification in Configuration.classifications:
     classification.print()
 
-investment_value = float(prompt("How much money do you want to invest? ", validator=NumberValidator()))
+investment_value = float(prompt("\nHow much money do you want to invest? ", validator=NumberValidator()))
 
 for classification in Configuration.classifications:
     classification.calculate_target_values(investment_value)
