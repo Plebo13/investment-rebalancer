@@ -17,6 +17,8 @@ class Asset:
         self.classifications: List[Classification] = []
         self.investments: Dict[Investment, NamedList[Category]] = dict()
         self.current_value = 0.0
+        self.delta = 0.0
+        self.investment_value = 0.0
 
     def print(self):
         print_formatted_text("")
@@ -62,6 +64,7 @@ class Asset:
         return result
 
     def rebalance(self):
+        self.calculate_target_values()
         for category in self.get_all_categories():
             investments = self.get_investments(category)
             investments.sort(reverse=True)
@@ -86,3 +89,10 @@ class Asset:
             if result == -1.0 or category.investment_value < result:
                 result = category.investment_value
         return result
+
+    def calculate_target_values(self):
+        for classification in self.classifications:
+            classification.calculate_target_values(self.investment_value)
+
+    def calculate_delta(self, total_value: float):
+        self.delta = total_value * self.percentage / 100 - self.current_value
