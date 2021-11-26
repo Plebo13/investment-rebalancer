@@ -1,7 +1,7 @@
 from functools import total_ordering
 
-import sharepp
 from prompt_toolkit import print_formatted_text, HTML
+from sharepp import SharePP
 
 from main.model.Named import Named
 
@@ -32,7 +32,7 @@ class Investment(Named):
         return self.current_value > other.current_value
 
     def calculate_current_value(self):
-        self.current_value = self.quantity * sharepp.parse_price(self.isin)
+        self.current_value = self.quantity * SharePP.get_etf_price(self.isin)
 
     def print(self):
         value_str = "{value:.2f}€"
