@@ -54,7 +54,7 @@ class Classification(Named):
         return percentage == 100.0
 
     def print(self):
-        print_formatted_text("")
         print_formatted_text(HTML("<b><u>{:<20} | {:s}</u></b>".format(self.name, "Allocation")))
         for category in self.categories:
             print_formatted_text("{:<20} | {:.2f}%".format(category.name, round(category.current_percentage * 100, 2)))
+        print_formatted_text("")
