@@ -2,8 +2,8 @@ from typing import List
 
 from prompt_toolkit import print_formatted_text, HTML
 
-from main.model.Category import Category
 from main.model.Named import Named
+from main.model.classification.Category import Category
 
 
 class Classification(Named):
@@ -17,7 +17,7 @@ class Classification(Named):
             return True
         if not isinstance(o, Classification):
             return False
-        return o.name == self.name
+        return super().__eq__(o)
 
     def __str__(self) -> str:
         result = self.name
@@ -31,7 +31,8 @@ class Classification(Named):
             self.current_value += category.current_value
 
         for category in self.categories:
-            category.current_percentage = round(category.current_value / self.current_value, 4)
+            category.allocation = round(
+                category.current_value / self.current_value, 4)
 
     def calculate_target_values(self, investment_value: float):
         target_value = self.current_value + investment_value
@@ -54,7 +55,9 @@ class Classification(Named):
         return percentage == 100.0
 
     def print(self):
-        print_formatted_text(HTML("<b><u>{:<20} | {:s}</u></b>".format(self.name, "Allocation")))
+        print_formatted_text(
+            HTML("<b><u>{:<20} | {:s}</u></b>".format(self.name, "Allocation")))
         for category in self.categories:
-            print_formatted_text("{:<20} | {:.2f}%".format(category.name, round(category.current_percentage * 100, 2)))
+            print_formatted_text("{:<20} | {:.2f}%".format(category.name, round(
+                category.allocation * 100, 2)))
         print_formatted_text("")

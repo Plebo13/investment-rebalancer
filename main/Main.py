@@ -3,9 +3,9 @@ import sys
 from prompt_toolkit import HTML, print_formatted_text, prompt
 
 from main.controller import Configuration
-# Script starts here
 from main.controller.NumberValidator import NumberValidator
 
+# Script starts here
 if len(sys.argv) == 2:
     Configuration.read(sys.argv[1])
 else:
@@ -28,11 +28,11 @@ investment_value = float(prompt("\nHow much money do you want to invest? ",
 total_value += investment_value
 for asset in Configuration.assets:
     asset.calculate_delta(total_value)
-    if asset.delta > investment_value:
+    if asset.delta_value > investment_value:
         asset.investment_value = investment_value
         investment_value = 0
-    elif asset.delta > 0:
-        asset.investment_value = asset.delta
+    elif asset.delta_value > 0:
+        asset.investment_value = asset.delta_value
         investment_value -= asset.investment_value
 
     asset.rebalance()

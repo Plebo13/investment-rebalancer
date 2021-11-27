@@ -3,22 +3,19 @@ from typing import List, Dict
 from prompt_toolkit import print_formatted_text, HTML
 from prompt_toolkit.shortcuts import ProgressBar
 
-from main.model.Category import Category
-from main.model.Classification import Classification
-from main.model.Investment import Investment
 from main.model.NamedList import NamedList
+from main.model.asset.AbstractAsset import AbstractAsset
+from main.model.classification.Category import Category
+from main.model.classification.Classification import Classification
 from main.model.exception.ConfigurationException import ConfigurationException
+from main.model.investment.ETFInvestment import ETFInvestment
 
 
-class Asset:
+class DeepAsset(AbstractAsset):
     def __init__(self, name: str, percentage: float):
-        self.name = name
-        self.percentage = percentage
+        super().__init__(name, percentage)
         self.classifications: List[Classification] = []
-        self.investments: Dict[Investment, NamedList[Category]] = dict()
-        self.current_value = 0.0
-        self.delta = 0.0
-        self.investment_value = 0.0
+        self.investments: Dict[ETFInvestment, NamedList[Category]] = dict()
 
     def print(self):
         print_formatted_text("")
@@ -57,7 +54,7 @@ class Asset:
         return result
 
     def get_investments(self, category: Category) -> List:
-        result: List[Investment] = []
+        result: List[ETFInvestment] = []
         for investment in self.investments:
             if self.investments[investment].contains(category.name):
                 result.append(investment)
@@ -83,7 +80,7 @@ class Asset:
                             investment):
                             investment_category.investment_value -= smallest_delta
 
-    def get_smallest_delta(self, investment: Investment) -> float:
+    def get_smallest_delta(self, investment: ETFInvestment) -> float:
         result = -1.0
         for category in self.investments[investment]:
             if result == -1.0 or category.investment_value < result:
@@ -93,6 +90,3 @@ class Asset:
     def calculate_target_values(self):
         for classification in self.classifications:
             classification.calculate_target_values(self.investment_value)
-
-    def calculate_delta(self, total_value: float):
-        self.delta = total_value * self.percentage / 100 - self.current_value
