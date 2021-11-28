@@ -21,7 +21,7 @@ class Main:
 
         table.align = "l"
         print_formatted_text(table.get_string(sortby="Allocation", reversesort=True))
-        format_str = "<b>Total value: <u>{value:.2f}€</u></b>"
+        format_str = "<b>Total value: <u>{value:.2f} €</u></b>"
         print_formatted_text(HTML(format_str.format(value=self.total_value)))
 
     def start(self):
