@@ -8,13 +8,13 @@ from main.model.investment.BaseInvestment import BaseInvestment
 
 
 class FlatAsset(AbstractAsset):
-    def __init__(self, name: str, percentage: float):
+    def __init__(self, name: str, target_allocation: float):
         """
         Constructor for a given name and a given allocation.
         :param name: the name of the asset
-        :param percentage: the allocation for that asset
+        :param target_allocation: the allocation for that asset
         """
-        super().__init__(name, percentage)
+        super().__init__(name, target_allocation)
         self.target_value = 0.0
         self.investments: List[BaseInvestment] = []
 
@@ -32,7 +32,7 @@ class FlatAsset(AbstractAsset):
     def validate(self):
         total_allocation = 0.0
         for investment in self.investments:
-            total_allocation += investment.allocation
+            total_allocation += investment.target_allocation
         return total_allocation == 100.0
 
     def calculate_current_value(self):
@@ -42,12 +42,12 @@ class FlatAsset(AbstractAsset):
                 self.current_value += investment.current_value
 
     def calculate_delta(self, total_value: float):
-        self.target_value = total_value * self.percentage / 100
+        self.target_value = total_value * self.target_allocation / 100
         self.delta_value = self.target_value - self.current_value
 
     def rebalance(self):
         for investment in self.investments:
-            investment_target_value = self.target_value * investment.allocation / 100
+            investment_target_value = self.target_value * investment.target_allocation / 100
             investment_delta_value = investment_target_value - investment.current_value
             if self.investment_value < investment_delta_value:
                 investment.investment_value += self.investment_value

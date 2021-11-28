@@ -3,31 +3,31 @@ from main.model.Named import Named
 
 class Category(Named):
 
-    def __init__(self, name: str, percentage: float):
+    def __init__(self, name: str, target_allocation: float):
         """
         Constructor for a given name and a given allocation.
         :param name: the name of the asset
-        :param percentage: the allocation for that asset
+        :param target_allocation: the allocation for that asset
         """
         super().__init__(name)
-        self.percentage = percentage
-        self.allocation = 0.0
+        self.target_allocation = target_allocation
+        self.current_allocation = 0.0
         self.current_value = 0.0
         self.delta_value = 0.0
         self.investment_value = 0.0
 
-    def __eq__(self, o: object) -> bool:
+    def __eq__(self, other: object) -> bool:
         """
         Checks whether or not an object is equal to this instance.
         Two categories are equal if they have the same name.
-        :param o: the other object
+        :param other: the other object
         :return: true if the other object is equal, otherwise false
         """
-        if o == self:
+        if other == self:
             return True
-        if not isinstance(o, Category):
+        if not isinstance(other, Category):
             return False
-        return o.name == self.name
+        return other.name == self.name
 
     def __str__(self) -> str:
         """

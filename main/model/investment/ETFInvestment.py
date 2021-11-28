@@ -7,16 +7,16 @@ from main.model.investment.BaseInvestment import BaseInvestment
 class ETFInvestment(BaseInvestment):
     investment_sum: float
 
-    def __init__(self, isin: str, enabled: bool, name: str, quantity: float, allocation: float = 0.0):
+    def __init__(self, isin: str, enabled: bool, name: str, quantity: float, target_allocation: float = 0.0):
         """
         Constructor for a given isin, name, quantity, enabled flag and optional allocation.
         :param isin: the investments isin
         :param enabled: flag whether this investment is enabled or not
         :param name: the investments name
         :param quantity: the investments quantity
-        :param allocation: the investments allocation
+        :param target_allocation: the investments allocation
         """
-        super().__init__(enabled, name, quantity, allocation)
+        super().__init__(enabled, name, quantity, target_allocation)
         self.isin = isin
 
     def __eq__(self, other: object) -> bool:

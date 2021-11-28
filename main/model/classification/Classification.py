@@ -16,18 +16,18 @@ class Classification(Named):
         self.current_value = 0.0
         self.categories: List[Category] = []
 
-    def __eq__(self, o: object) -> bool:
+    def __eq__(self, other: object) -> bool:
         """
         Checks whether or not an object is equal to this instance.
         Two classifications are equal if they have the same name.
-        :param o: the other object
+        :param other: the other object
         :return: true if the other object is equal, otherwise false
         """
-        if o == self:
+        if other == self:
             return True
-        if not isinstance(o, Classification):
+        if not isinstance(other, Classification):
             return False
-        return super().__eq__(o)
+        return super().__eq__(other)
 
     def __str__(self) -> str:
         """
@@ -45,13 +45,13 @@ class Classification(Named):
             self.current_value += category.current_value
 
         for category in self.categories:
-            category.allocation = round(
+            category.current_allocation = round(
                 category.current_value / self.current_value, 4)
 
     def calculate_target_values(self, investment_value: float):
         target_value = self.current_value + investment_value
         for category in self.categories:
-            category_target_value = target_value * (category.percentage / 100)
+            category_target_value = target_value * (category.target_allocation / 100)
             category.delta_value = category_target_value - category.current_value
             if category.delta_value > investment_value:
                 category.investment_value += investment_value
@@ -63,7 +63,7 @@ class Classification(Named):
     def is_valid(self) -> bool:
         percentage = 0.0
         for category in self.categories:
-            percentage += category.percentage
+            percentage += category.target_allocation
 
         return percentage == 100.0
 
@@ -72,5 +72,5 @@ class Classification(Named):
             HTML("<b><u>{:<20} | {:s}</u></b>".format(self.name, "Allocation")))
         for category in self.categories:
             print_formatted_text("{:<20} | {:.2f}%".format(category.name, round(
-                category.allocation * 100, 2)))
+                category.current_allocation * 100, 2)))
         print_formatted_text("")

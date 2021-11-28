@@ -12,8 +12,8 @@ from main.model.investment.ETFInvestment import ETFInvestment
 
 
 class DeepAsset(AbstractAsset):
-    def __init__(self, name: str, percentage: float):
-        super().__init__(name, percentage)
+    def __init__(self, name: str, target_allocation: float):
+        super().__init__(name, target_allocation)
         self.classifications: List[Classification] = []
         self.investments: Dict[ETFInvestment, NamedList[Category]] = dict()
 

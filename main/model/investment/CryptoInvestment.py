@@ -5,16 +5,16 @@ from main.model.investment.BaseInvestment import BaseInvestment
 
 
 class CryptoInvestment(BaseInvestment):
-    def __init__(self, coin: Coin, enabled: bool, name: str, quantity: float, allocation: float = 0.0):
+    def __init__(self, coin: Coin, enabled: bool, name: str, quantity: float, target_allocation: float = 0.0):
         """
         Constructor for a given coin, name, quantity, enabled flag and optional allocation.
         :param coin: the coin that this investment is representing
         :param enabled: flag whether this investment is enabled or not
         :param name: the investments name
         :param quantity: the investments quantity
-        :param allocation: the investments allocation
+        :param target_allocation: the investments allocation
         """
-        super().__init__(enabled, name, quantity, allocation)
+        super().__init__(enabled, name, quantity, target_allocation)
         self.coin = coin
 
     def __eq__(self, other: object) -> bool:
