@@ -13,8 +13,10 @@ pycosat==0.6.3
 requests==2.26.0
 ruamel.yaml==0.17.17
 ruamel.yaml.clib==0.2.6
-sharepp==1.0.1
 soupsieve==2.3
 urllib3==1.26.7
 virtualenv==20.10.0
 virtualenv-clone==0.5.7
+
+prettytable~=2.4.0
+sharepp==1.0.1
