@@ -1,12 +1,12 @@
-from abc import abstractmethod, ABC
+from abc import ABC, abstractmethod
 
 from main.model.Named import Named
 
 
 class AbstractAsset(Named, ABC):
     def __init__(self, name: str, target_allocation: float):
-        """
-        Constructor for a given name and a given allocation.
+        """Constructor for a given name and a given allocation.
+
         :param name: the name of the asset
         :param target_allocation: the allocation for that asset
         """
