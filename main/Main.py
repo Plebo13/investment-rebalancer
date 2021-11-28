@@ -36,6 +36,9 @@ class Main:
                                         validator=NumberValidator()))
         self.rebalance(investment_value)
 
+        for asset in Configuration.assets:
+            asset.print_result()
+
     def rebalance(self, investment_value):
         self.total_value += investment_value
         for asset in Configuration.assets:
