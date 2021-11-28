@@ -38,3 +38,7 @@ class AbstractAsset(Named, ABC):
     @abstractmethod
     def print(self):
         pass
+
+    @abstractmethod
+    def print_result(self):
+        pass

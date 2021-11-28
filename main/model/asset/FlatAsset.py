@@ -1,5 +1,6 @@
 from typing import List
 
+from prettytable import PrettyTable
 from prompt_toolkit import print_formatted_text, HTML
 from prompt_toolkit.shortcuts import ProgressBar
 
@@ -55,3 +56,14 @@ class FlatAsset(AbstractAsset):
             elif investment_delta_value > 0:
                 investment.investment_value = investment_delta_value
                 self.investment_value -= investment_delta_value
+
+    def print_result(self):
+        table = PrettyTable(["Investment", "Invest"])
+        for investment in self.investments:
+            if investment.investment_value > 0:
+                table.add_row(
+                    [investment.name, str(round(investment.investment_value, 2)) + " €"])
+
+        if len(table.rows) > 0:
+            table.align = "l"
+            print_formatted_text(table.get_string(sortby="Invest", reversesort=True))

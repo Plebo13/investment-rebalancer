@@ -1,5 +1,6 @@
 from typing import List, Dict
 
+from prettytable import PrettyTable
 from prompt_toolkit import print_formatted_text, HTML
 from prompt_toolkit.shortcuts import ProgressBar
 
@@ -72,12 +73,12 @@ class DeepAsset(AbstractAsset):
                     if category.investment_value < smallest_delta:
                         investment.investment_value += category.investment_value
                         for investment_category in self.investments.get(
-                            investment):
+                                investment):
                             investment_category.investment_value -= category.investment_value
                     else:
                         investment.investment_value += smallest_delta
                         for investment_category in self.investments.get(
-                            investment):
+                                investment):
                             investment_category.investment_value -= smallest_delta
 
     def get_smallest_delta(self, investment: ETFInvestment) -> float:
@@ -90,3 +91,14 @@ class DeepAsset(AbstractAsset):
     def calculate_target_values(self):
         for classification in self.classifications:
             classification.calculate_target_values(self.investment_value)
+
+    def print_result(self):
+        table = PrettyTable(["Investment", "Invest"])
+        for investment in self.investments.keys():
+            if investment.investment_value > 0:
+                table.add_row(
+                    [investment.name, str(round(investment.investment_value, 2)) + " €"])
+
+        if len(table.rows) > 0:
+            table.align = "l"
+            print_formatted_text(table.get_string(sortby="Invest", reversesort=True))
