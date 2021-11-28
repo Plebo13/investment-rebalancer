@@ -41,4 +41,12 @@ class FlatAsset(AbstractAsset):
         self.delta_value = self.target_value - self.current_value
 
     def rebalance(self):
-        pass
+        for investment in self.investments:
+            investment_target_value = self.target_value * investment.allocation / 100
+            investment_delta_value = investment_target_value - investment.current_value
+            if self.investment_value < investment_delta_value:
+                investment.investment_value += self.investment_value
+                self.investment_value = 0
+            elif investment_delta_value > 0:
+                investment.investment_value = investment_delta_value
+                self.investment_value -= investment_delta_value
