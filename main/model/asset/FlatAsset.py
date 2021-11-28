@@ -9,6 +9,11 @@ from main.model.investment.BaseInvestment import BaseInvestment
 
 class FlatAsset(AbstractAsset):
     def __init__(self, name: str, percentage: float):
+        """
+        Constructor for a given name and a given allocation.
+        :param name: the name of the asset
+        :param percentage: the allocation for that asset
+        """
         super().__init__(name, percentage)
         self.target_value = 0.0
         self.investments: List[BaseInvestment] = []

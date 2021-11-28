@@ -8,10 +8,24 @@ class ETFInvestment(BaseInvestment):
     investment_sum: float
 
     def __init__(self, isin: str, enabled: bool, name: str, quantity: float, allocation: float = 0.0):
+        """
+        Constructor for a given isin, name, quantity, enabled flag and optional allocation.
+        :param isin: the investments isin
+        :param enabled: flag whether this investment is enabled or not
+        :param name: the investments name
+        :param quantity: the investments quantity
+        :param allocation: the investments allocation
+        """
         super().__init__(enabled, name, quantity, allocation)
         self.isin = isin
 
     def __eq__(self, other: object) -> bool:
+        """
+        Checks whether or not an object is equal to this instance.
+        Two etf investments are equal if they have the same isin.
+        :param other: the other object
+        :return: true if the other object is equal, otherwise false
+        """
         if other == self:
             return True
         if not isinstance(other, ETFInvestment):
@@ -19,6 +33,10 @@ class ETFInvestment(BaseInvestment):
         return other.isin == self.isin
 
     def __hash__(self) -> int:
+        """
+        Calculates the hash of this instance.
+        :return: the hash
+        """
         return self.isin.__hash__()
 
     def calculate_current_value(self):
