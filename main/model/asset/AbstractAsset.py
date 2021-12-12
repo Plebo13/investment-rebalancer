@@ -5,8 +5,8 @@ from main.model.Named import Named
 
 class AbstractAsset(Named, ABC):
     def __init__(self, name: str, target_allocation: float):
-        """Constructor for a given name and a given allocation.
-
+        """
+        Constructor for a given name and a given allocation.
         :param name: the name of the asset
         :param target_allocation: the allocation for that asset
         """
@@ -31,6 +31,7 @@ class AbstractAsset(Named, ABC):
     def calculate_delta(self, total_value: float):
         """
         Calculates the delta value between the current value and the desired value based on the assets allocation.
+
         :param total_value: the new total value
         """
         self.delta_value = total_value * self.target_allocation / 100 - self.current_value

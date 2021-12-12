@@ -9,8 +9,8 @@ from main.controller.NumberValidator import NumberValidator
 
 class Main:
     def __init__(self, configuration_path: str = "config.json"):
-        """Constructor for a given configuration path.
-
+        """
+        Constructor for a given configuration path.
         :param configuration_path: the configuration path
         """
         Configuration.read(configuration_path)
