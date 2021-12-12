@@ -1,7 +1,7 @@
 from typing import List
 
 from prettytable import PrettyTable
-from prompt_toolkit import print_formatted_text, HTML
+from prompt_toolkit import HTML, print_formatted_text
 from prompt_toolkit.shortcuts import ProgressBar
 
 from main.model.asset.AbstractAsset import AbstractAsset
@@ -47,15 +47,13 @@ class FlatAsset(AbstractAsset):
         self.delta_value = self.target_value - self.current_value
 
     def rebalance(self):
-        for investment in self.investments:
-            investment_target_value = self.target_value * investment.target_allocation / 100
-            investment_delta_value = investment_target_value - investment.current_value
-            if self.investment_value < investment_delta_value:
-                investment.investment_value += self.investment_value
-                self.investment_value = 0
-            elif investment_delta_value > 0:
-                investment.investment_value = investment_delta_value
-                self.investment_value -= investment_delta_value
+        while self.investment_value > 1:
+            for investment in self.investments:
+                investment_target_value = self.target_value * investment.target_allocation / 100
+                investment_delta_value = investment_target_value - investment.current_value - investment.investment_value
+                if investment_delta_value > 0:
+                    investment.investment_value += 1
+                    self.investment_value -= 1
 
     def print_result(self):
         table = PrettyTable(["Investment", "Invest"])
