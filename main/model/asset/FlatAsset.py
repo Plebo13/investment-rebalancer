@@ -47,13 +47,24 @@ class FlatAsset(AbstractAsset):
         self.delta_value = self.target_value - self.current_value
 
     def rebalance(self):
+        self.investments.sort()
         while self.investment_value > 1:
             for investment in self.investments:
                 investment_target_value = self.target_value * investment.target_allocation / 100
                 investment_delta_value = investment_target_value - investment.current_value - investment.investment_value
-                if investment_delta_value > 0:
-                    investment.investment_value += 1
-                    self.investment_value -= 1
+
+                if investment_delta_value + investment.investment_value >= 10:
+                    if investment_delta_value < self.investment_value:
+                        investment.investment_value += investment_delta_value
+                        print(investment.name + ": " + str(investment.investment_value))
+                        self.investment_value -= investment_delta_value
+                    else:
+                        if self.investment_value >= 20:
+                            investment.investment_value += self.investment_value / 2
+                            self.investment_value = self.investment_value / 2
+                        else:
+                            investment.investment_value += self.investment_value
+                            self.investment_value = 0
 
     def print_result(self):
         table = PrettyTable(["Investment", "Invest"])
@@ -64,4 +75,4 @@ class FlatAsset(AbstractAsset):
 
         if len(table.rows) > 0:
             table.align = "l"
-            print_formatted_text(table.get_string(sortby="Invest", reversesort=True))
+            print_formatted_text(table.get_string())
