@@ -4,8 +4,8 @@ from prettytable import PrettyTable
 from prompt_toolkit import HTML, print_formatted_text
 from prompt_toolkit.shortcuts import ProgressBar
 
-from main.model.asset.AbstractAsset import AbstractAsset
-from main.model.investment.BaseInvestment import BaseInvestment
+from investment_rebalancer.model.asset.AbstractAsset import AbstractAsset
+from investment_rebalancer.model.investment.BaseInvestment import BaseInvestment
 
 
 class FlatAsset(AbstractAsset):
