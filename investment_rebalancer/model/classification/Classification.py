@@ -1,8 +1,9 @@
 from typing import List
 
-from main.model.Named import Named
-from main.model.classification.Category import Category
 from prompt_toolkit import print_formatted_text, HTML
+
+from investment_rebalancer.model.Named import Named
+from investment_rebalancer.model.classification.Category import Category
 
 
 class Classification(Named):

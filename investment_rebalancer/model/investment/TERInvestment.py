@@ -1,4 +1,4 @@
-from main.model.investment.ETFInvestment import ETFInvestment
+from investment_rebalancer.model.investment.ETFInvestment import ETFInvestment
 
 
 class TERInvestment(ETFInvestment):

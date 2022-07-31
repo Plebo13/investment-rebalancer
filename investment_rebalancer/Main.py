@@ -1,9 +1,10 @@
 import sys
 
-from main.controller import Configuration
-from main.controller.NumberValidator import NumberValidator
 from prettytable import PrettyTable
 from prompt_toolkit import HTML, print_formatted_text, prompt
+
+from investment_rebalancer.controller import Configuration
+from investment_rebalancer.controller.NumberValidator import NumberValidator
 
 
 class Main:
@@ -56,7 +57,7 @@ class Main:
             asset.rebalance()
 
 
-if __name__ == "__main__":
+if __name__ == "__investment_rebalancer__":
     main: Main
     if len(sys.argv) == 2:
         main = Main(sys.argv[1])

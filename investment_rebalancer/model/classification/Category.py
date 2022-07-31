@@ -1,4 +1,4 @@
-from main.model.Named import Named
+from investment_rebalancer.model.Named import Named
 
 
 class Category(Named):

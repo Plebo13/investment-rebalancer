@@ -1,6 +1,6 @@
 from typing import List, TypeVar
 
-from main.model.Named import Named
+from investment_rebalancer.model.Named import Named
 
 T = TypeVar('T', bound=Named)
 

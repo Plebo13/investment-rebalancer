@@ -1,6 +1,7 @@
-from main.model.investment.BaseInvestment import BaseInvestment
 from prompt_toolkit import print_formatted_text, HTML
 from sharepp import SharePP, Coin
+
+from investment_rebalancer.model.investment.BaseInvestment import BaseInvestment
 
 
 class CryptoInvestment(BaseInvestment):

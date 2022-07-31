@@ -3,17 +3,17 @@ import os
 
 from sharepp import Coin
 
-from main.model.NamedList import NamedList
-from main.model.asset.AbstractAsset import AbstractAsset
-from main.model.asset.DeepAsset import DeepAsset
-from main.model.asset.FlatAsset import FlatAsset
-from main.model.classification.Category import Category
-from main.model.classification.Classification import Classification
-from main.model.exception.ConfigurationException import ConfigurationException
-from main.model.investment.BaseInvestment import BaseInvestment
-from main.model.investment.CryptoInvestment import CryptoInvestment
-from main.model.investment.ETFInvestment import ETFInvestment
-from main.model.investment.TERInvestment import TERInvestment
+from investment_rebalancer.model.NamedList import NamedList
+from investment_rebalancer.model.asset.AbstractAsset import AbstractAsset
+from investment_rebalancer.model.asset.DeepAsset import DeepAsset
+from investment_rebalancer.model.asset.FlatAsset import FlatAsset
+from investment_rebalancer.model.classification.Category import Category
+from investment_rebalancer.model.classification.Classification import Classification
+from investment_rebalancer.model.exception.ConfigurationException import ConfigurationException
+from investment_rebalancer.model.investment.BaseInvestment import BaseInvestment
+from investment_rebalancer.model.investment.CryptoInvestment import CryptoInvestment
+from investment_rebalancer.model.investment.ETFInvestment import ETFInvestment
+from investment_rebalancer.model.investment.TERInvestment import TERInvestment
 
 DEFAULT_CONFIG_PATH = "config.json"
 
