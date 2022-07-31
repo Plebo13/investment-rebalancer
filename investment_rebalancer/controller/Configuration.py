@@ -15,16 +15,14 @@ from investment_rebalancer.model.investment.CryptoInvestment import CryptoInvest
 from investment_rebalancer.model.investment.ETFInvestment import ETFInvestment
 from investment_rebalancer.model.investment.TERInvestment import TERInvestment
 
-DEFAULT_CONFIG_PATH = "config.json"
-
 assets: NamedList[AbstractAsset] = NamedList()
 
 
-def config_available(config_path=DEFAULT_CONFIG_PATH) -> bool:
+def config_available(config_path) -> bool:
     return os.path.isfile(config_path)
 
 
-def read(config_path=DEFAULT_CONFIG_PATH):
+def read(config_path):
     with open(config_path) as configuration_file:
         config = json.load(configuration_file)
 

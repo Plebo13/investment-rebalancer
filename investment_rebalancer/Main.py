@@ -1,4 +1,4 @@
-import sys
+import argparse
 
 from prettytable import PrettyTable
 from prompt_toolkit import HTML, print_formatted_text, prompt
@@ -57,11 +57,14 @@ class Main:
             asset.rebalance()
 
 
-if __name__ == "__investment_rebalancer__":
-    main: Main
-    if len(sys.argv) == 2:
-        main = Main(sys.argv[1])
-    else:
-        main = Main(sys.argv[1])
+if __name__ == "__main__":
+    parser = argparse.ArgumentParser(description='Rebalance your investment portfolio.')
+    parser.add_argument('--configuration', '-c', metavar='Configuration', nargs=1,
+                        help='path to the configuration file', required=True)
 
-    main.start()
+    try:
+        args = parser.parse_args()
+        main: Main(args.configuration)
+        main.start()
+    except FileNotFoundError:
+        print("The given configuration file does not exist.")
