@@ -4,12 +4,12 @@ from prettytable import PrettyTable
 from prompt_toolkit import print_formatted_text, HTML
 from prompt_toolkit.shortcuts import ProgressBar
 
-from main.model.NamedList import NamedList
+from main.model.named_list import NamedList
 from main.model.asset.AbstractAsset import AbstractAsset
 from main.model.classification.Category import Category
 from main.model.classification.Classification import Classification
 from main.model.investment.ETFInvestment import ETFInvestment
-from main.model.Errors import ConfigurationException
+from main.model.errors import ConfigurationException
 
 
 class DeepAsset(AbstractAsset):

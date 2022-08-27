@@ -2,9 +2,9 @@ import json
 import os
 
 from sharepp import Coin
-from main.model.Errors import ConfigurationException
-from main.model.NamedList import NamedList
-from main.model.asset.AbstractAsset import AbstractAsset
+from main.model.errors import ConfigurationException
+from main.model.named_list import NamedList
+from main.model.asset.etf import ETF
 from main.model.asset.DeepAsset import DeepAsset
 from main.model.asset.FlatAsset import FlatAsset
 from main.model.classification.Category import Category
@@ -16,8 +16,6 @@ from main.model.investment.TERInvestment import TERInvestment
 
 DEFAULT_CONFIG_PATH = "config.json"
 
-assets: NamedList[AbstractAsset] = NamedList()
-
 
 class Configuration:
     def __init__(self, config_path: str = DEFAULT_CONFIG_PATH) -> None:
@@ -26,28 +24,22 @@ class Configuration:
                 f"The given configuration does not exist: {config_path}"
             )
         self.config_path = config_path
-        self.assets: NamedList[AbstractAsset] = NamedList()
+        self.etfs: list[ETF] = list()
 
     def parse(self):
         with open(self.config_path) as configuration_file:
             config = json.load(configuration_file)
 
-        # Read assets
-        assets_config = config["assets"]
-        for asset_name in assets_config:
-            asset: AbstractAsset
-            allocation = float(assets_config[asset_name]["allocation"])
-            if "classifications" in assets_config[asset_name]:
-                asset = DeepAsset(asset_name, allocation)
-                assert isinstance(asset, DeepAsset)
-                # parse_classifications(asset, assets_config[asset_name])
-            else:
-                asset = FlatAsset(asset_name, allocation)
-                assert isinstance(asset, FlatAsset)
-                # parse_allocated_investments(asset, assets_config[asset_name])
-
-            asset.validate()
-            assets.append(asset)
+        # Read etf configs
+        etf_config = config["etf"]
+        for etf in etf_config:
+            print(etf)
+            id = etf
+            name = etf_config[etf]["name"]
+            enabled = etf_config[etf]["enabled"]
+            quantity = etf_config[etf]["quantity"]
+            ter = etf_config[etf]["ter"]
+            self.etfs.append(ETF(id, name, enabled, quantity, ter))
 
     def parse_classifications(asset: DeepAsset, asset_config):
         classifications_config = asset_config["classifications"]

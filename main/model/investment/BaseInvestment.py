@@ -1,6 +1,6 @@
 from abc import ABC, abstractmethod
 
-from main.model.Named import Named
+from main.model.named import Named
 
 
 class BaseInvestment(Named, ABC):

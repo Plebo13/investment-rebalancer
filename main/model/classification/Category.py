@@ -1,4 +1,4 @@
-from main.model.Named import Named
+from main.model.named import Named
 
 
 class Category(Named):

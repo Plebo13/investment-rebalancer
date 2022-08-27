@@ -15,7 +15,7 @@
       }
     }
   },
-  "investments": {
+  "etf": {
     "LU1781541179": {
       "name": "Lyxor Core MSCI World",
       "enabled": true,
