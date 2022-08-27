@@ -19,5 +19,5 @@ virtualenv==20.10.0
 virtualenv-clone==0.5.7
 
 prettytable~=2.4.0
-prompt_toolkit=3.0.29
+prompt_toolkit==3.0.29
 sharepp==1.0.1
