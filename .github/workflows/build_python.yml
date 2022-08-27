@@ -37,9 +37,10 @@ jobs:
           flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
       - name: Test with pytest
         run: |
-          pytest --cov=main tests/
+          pytest xml:coverage.xml --cov=main tests/
       - name: Coverage comment
-        id: coverage_comment
-        uses: ewjoachim/python-coverage-comment-action@v3
-        with:
-          GITHUB_TOKEN: ${{ github.token }}
+          uses: orgoro/coverage@v2
+          with:
+            coverageFile: coverage.xml
+            token: ${{ secrets.GITHUB_TOKEN }}
+            thresholdAll: 0.8
