@@ -27,6 +27,7 @@ class Configuration:
                 f"The given configuration does not exist: {config_path}"
             )
         self.config_path = config_path
+        self.assets: NamedList[AbstractAsset] = NamedList()
 
     def parse(self):
         with open(self.config_path) as configuration_file:

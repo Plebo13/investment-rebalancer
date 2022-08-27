@@ -3,7 +3,7 @@ import sys
 from prettytable import PrettyTable
 from prompt_toolkit import HTML, print_formatted_text, prompt
 
-from main.controller import Configuration
+from main.model import Configuration
 from main.controller.NumberValidator import NumberValidator
 
 
