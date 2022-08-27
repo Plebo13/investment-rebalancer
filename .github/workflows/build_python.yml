@@ -5,8 +5,8 @@ name: Python application
 
 on:
   push:
-    branches: 
-      - "main"
+    branches:
+      - 'main'
   pull_request:
 
 permissions:
@@ -17,7 +17,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        python-version: [ "3.8" ]
+        python-version: ['3.8']
     steps:
       - uses: actions/checkout@v3
       - name: Set up Python ${{ matrix.python-version }}
@@ -37,7 +37,7 @@ jobs:
           flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
       - name: Test with pytest
         run: |
-          pytest xml:coverage.xml --cov=main tests/
+          pytest --cov-report xml:coverage.xml --cov=main tests/
       - name: Coverage comment
         uses: orgoro/coverage@v2
         with:
