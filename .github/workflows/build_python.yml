@@ -39,8 +39,8 @@ jobs:
         run: |
           pytest xml:coverage.xml --cov=main tests/
       - name: Coverage comment
-          uses: orgoro/coverage@v2
-          with:
-            coverageFile: coverage.xml
-            token: ${{ secrets.GITHUB_TOKEN }}
-            thresholdAll: 0.8
+        uses: orgoro/coverage@v2
+        with:
+          coverageFile: coverage.xml
+          token: ${{ secrets.GITHUB_TOKEN }}
+          thresholdAll: 0.8
