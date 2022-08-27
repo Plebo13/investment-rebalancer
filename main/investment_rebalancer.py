@@ -3,7 +3,7 @@ import sys
 from prettytable import PrettyTable
 from prompt_toolkit import HTML, print_formatted_text, prompt
 
-from main.model import configuration
+from main.model import Configuration
 from main.controller.NumberValidator import NumberValidator
 
 
@@ -13,12 +13,12 @@ class Main:
         Constructor for a given configuration path.
         :param configuration_path: the configuration path
         """
-        configuration.read(configuration_path)
+        Configuration.read(configuration_path)
         self.total_value = 0.0
 
     def print_current_asset_allocation(self):
         table = PrettyTable(["Asset", "Allocation", "Value"])
-        for asset in configuration.etfs:
+        for asset in Configuration.etfs:
             assets_current_allocation = round(asset.current_value / self.total_value * 100, 2)
             table.add_row(
                 [asset.name, str(assets_current_allocation) + " %", str(round(asset.current_value, 2)) + " €"])
@@ -30,7 +30,7 @@ class Main:
 
     def start(self):
         # Update current values
-        for asset in configuration.etfs:
+        for asset in Configuration.etfs:
             asset.calculate_current_value()
             self.total_value += asset.current_value
 
@@ -40,12 +40,12 @@ class Main:
                                         validator=NumberValidator()))
         self.rebalance(investment_value)
 
-        for asset in configuration.etfs:
+        for asset in Configuration.etfs:
             asset.print_result()
 
     def rebalance(self, investment_value):
         self.total_value += investment_value
-        for asset in configuration.etfs:
+        for asset in Configuration.etfs:
             asset.calculate_delta(self.total_value)
             if asset.delta_value > investment_value:
                 asset.investment_value = investment_value

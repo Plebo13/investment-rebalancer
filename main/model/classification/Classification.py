@@ -2,7 +2,7 @@ from typing import List
 
 from prompt_toolkit import print_formatted_text, HTML
 
-from main.model.named import Named
+from main.model.Named import Named
 from main.model.classification.Category import Category
 
 
