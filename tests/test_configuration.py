@@ -1,7 +1,7 @@
 import unittest
 
 from main.model.Configuration import Configuration
-from main.model.exception.ConfigurationException import ConfigurationException
+from main.model.Errors import ConfigurationException
 
 
 class ConfigurationTest(unittest.TestCase):

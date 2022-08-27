@@ -2,14 +2,13 @@ import json
 import os
 
 from sharepp import Coin
-
+from main.model.Errors import ConfigurationException
 from main.model.NamedList import NamedList
 from main.model.asset.AbstractAsset import AbstractAsset
 from main.model.asset.DeepAsset import DeepAsset
 from main.model.asset.FlatAsset import FlatAsset
 from main.model.classification.Category import Category
 from main.model.classification.Classification import Classification
-from main.model.exception.ConfigurationException import ConfigurationException
 from main.model.investment.BaseInvestment import BaseInvestment
 from main.model.investment.CryptoInvestment import CryptoInvestment
 from main.model.investment.ETFInvestment import ETFInvestment
