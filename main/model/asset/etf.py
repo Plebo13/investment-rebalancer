@@ -1,7 +1,3 @@
-from dataclasses import dataclass
-
-
-@dataclass(eq=False)
 class ETF:
     def __init__(
         self,
