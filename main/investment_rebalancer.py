@@ -16,10 +16,10 @@ def main(config_path: str):
         return
 
     total_value = 0.0
-    for classification in configuration.classifications:
-        total_value += classification.current_value
+    for etf in configuration.etfs:
+        total_value += configuration.etfs[etf].current_value
 
-    print(f"Total investment value: {total_value:.2f}€")
+    print(f"Total investment value: {total_value:.2f}€\n")
 
     for classification in configuration.classifications:
         print(f"{classification.name}:")
@@ -37,6 +37,17 @@ def main(config_path: str):
 
         table.align = "l"
         print(table.get_string(sortby="Allocation", reversesort=True))
+
+    investment_value = float(
+        prompt("\nHow much money do you want to invest? ", validator=NumberValidator())
+    )
+
+    for classification in configuration.classifications:
+        classification.calculate_target_values(investment_value)
+
+    for classification in configuration.classifications:
+        for category in classification.categories:
+            print(f"{category.name}: {category.investment:.2f}€")
 
 
 def start(self):

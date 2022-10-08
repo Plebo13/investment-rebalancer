@@ -1,6 +1,6 @@
 import json
 import os
-from typing import List, Set
+from typing import Dict, List, Set
 
 from sharepp import SharePP
 from main.model.errors import ConfigurationException
@@ -9,7 +9,7 @@ from main.model.asset.DeepAsset import DeepAsset
 from main.model.classification.category import Category
 from main.model.classification.classification import Classification
 
-etfs: "dict[str,ETF]" = {}
+etfs: Dict[str, ETF] = {}
 classifications: List[Classification] = []
 
 
