@@ -6,8 +6,8 @@ from prompt_toolkit.shortcuts import ProgressBar
 
 from main.model.named_list import NamedList
 from main.model.asset.AbstractAsset import AbstractAsset
-from main.model.classification.Category import Category
-from main.model.classification.Classification import Classification
+from main.model.classification.category import Category
+from main.model.classification.classification import Classification
 from main.model.investment.ETFInvestment import ETFInvestment
 from main.model.errors import ConfigurationException
 

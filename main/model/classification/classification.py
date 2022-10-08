@@ -1,20 +1,21 @@
-from typing import List
+from dataclasses import dataclass
 
 from prompt_toolkit import print_formatted_text, HTML
 
-from main.model.Named import Named
-from main.model.classification.Category import Category
+from main.model.classification.category import Category
 
 
-class Classification(Named):
-    def __init__(self, name: str):
-        """
-        Constructor for a given name.
-        :param name: the name of the classification
-        """
-        super().__init__(name)
-        self.current_value = 0.0
-        self.categories: List[Category] = []
+@dataclass(eq=False)
+class Classification:
+    name: str
+    categories: "list[Category]"
+
+    @property
+    def current_value(self) -> float:
+        value = 0.0
+        for category in self.categories:
+            value += category.current_value
+        return value
 
     def __eq__(self, other: object) -> bool:
         """
@@ -35,18 +36,10 @@ class Classification(Named):
         :return: the string
         """
         result = self.name
-        result += "\n" + str(self.current_value)
+        result += f"\n{self.current_value:.2f}€"
         for category in self.categories:
-            result += "\n    " + str(category)
+            result += f"\n  {category}"
         return result
-
-    def calculate_current_value(self):
-        for category in self.categories:
-            self.current_value += category.current_value
-
-        for category in self.categories:
-            category.current_allocation = round(
-                category.current_value / self.current_value, 4)
 
     def calculate_target_values(self, investment_value: float):
         target_value = self.current_value + investment_value
@@ -69,8 +62,12 @@ class Classification(Named):
 
     def print(self):
         print_formatted_text(
-            HTML("<b><u>{:<20} | {:s}</u></b>".format(self.name, "Allocation")))
+            HTML("<b><u>{:<20} | {:s}</u></b>".format(self.name, "Allocation"))
+        )
         for category in self.categories:
-            print_formatted_text("{:<20} | {:.2f}%".format(category.name, round(
-                category.current_allocation * 100, 2)))
+            print_formatted_text(
+                "{:<20} | {:.2f}%".format(
+                    category.name, round(category.current_allocation * 100, 2)
+                )
+            )
         print_formatted_text("")

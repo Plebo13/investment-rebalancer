@@ -2,13 +2,13 @@
   "classifications": {
     "Regions": {
       "Developed World": {
-        "percentage": 70.0,
+        "target_allocation": 70.0,
         "assets": [
           "LU1781541179"
         ]
       },
       "Emerging Markets": {
-        "percentage": 30.0,
+        "target_allocation": 30.0,
         "assets": [
           "LU0635178014"
         ]
