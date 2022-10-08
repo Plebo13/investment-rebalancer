@@ -50,23 +50,6 @@ def main(config_path: str):
             print(f"{category.name}: {category.investment:.2f}€")
 
 
-def start(self):
-    # Update current values
-    # for asset in Configuration.etfs:
-    #     asset.calculate_current_value()
-    #     self.total_value += asset.current_value
-
-    self.print_current_asset_allocation()
-
-    investment_value = float(
-        prompt("\nHow much money do you want to invest? ", validator=NumberValidator())
-    )
-    self.rebalance(investment_value)
-
-    # for asset in Configuration.etfs:
-    #     asset.print_result()
-
-
 def rebalance(self, investment_value):
     self.total_value += investment_value
     # for asset in Configuration.etfs:
