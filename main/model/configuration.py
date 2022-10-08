@@ -1,6 +1,6 @@
 import json
 import os
-from typing import Set
+from typing import List, Set
 
 from sharepp import Coin, SharePP
 from main.model.errors import ConfigurationException
@@ -15,26 +15,14 @@ from main.model.investment.CryptoInvestment import CryptoInvestment
 from main.model.investment.ETFInvestment import ETFInvestment
 from main.model.investment.TERInvestment import TERInvestment
 
-DEFAULT_CONFIG_PATH = "config.json"
-
 etfs: "dict[str,ETF]" = {}
-classifications: "list[Classification]" = list()
+classifications: List[Classification] = []
 
 
-class Configuration:
-    def __init__(self, config_path: str = DEFAULT_CONFIG_PATH) -> None:
-        if not os.path.isfile(config_path):
-            raise ConfigurationException(
-                f"The given configuration does not exist: {config_path}"
-            )
-        self.config_path = config_path
-        self.etfs: list[ETF] = []
-
-
-def parse(config_path: str = DEFAULT_CONFIG_PATH):
+def parse(config_path: str):
     if not os.path.isfile(config_path):
         raise ConfigurationException(
-            f"The given configuration does not exist: {config_path}"
+            f"The given configuration file does not exist: {config_path}"
         )
 
     with open(config_path) as configuration_file:
@@ -75,13 +63,19 @@ def parse(config_path: str = DEFAULT_CONFIG_PATH):
         raise ConfigurationException("No classifications configured!")
 
 
-def parse_classification(name: str, config) -> Classification:
+def parse_classification(name: str, categories_config) -> Classification:
     categories: Set[Category] = []
-    for category in config:
-        new_cT = Category(
-            name=category, target_allocation=config[category]["target_allocation"]
+    for category_config in categories_config:
+        assets: List[ETF] = []
+        for asset_config in categories_config[category_config]["assets"]:
+            assets.append(etfs[asset_config])
+        categories.append(
+            Category(
+                category_config,
+                categories_config[category_config]["target_allocation"],
+                assets,
+            )
         )
-        categories.append(new_cT)
     return Classification(name, categories)
 
 

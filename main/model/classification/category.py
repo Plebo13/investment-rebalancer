@@ -3,13 +3,13 @@ from main.model.asset.etf import ETF
 
 
 class Category:
-    def __init__(self, name: str, target_allocation: float) -> None:
+    def __init__(self, name: str, target_allocation: float, etfs: List[ETF]) -> None:
         self.name = name
         self.target_allocation = target_allocation
+        self.etfs = etfs
         self.current_allocation: float = 0.0
         self.delta_value: float = 0.0
         self.investment: float = 0.0
-        self.etfs: List[ETF] = []
 
     @property
     def current_value(self) -> float:

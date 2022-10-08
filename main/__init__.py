@@ -1,1 +1,1 @@
-"""Package that holds all model classes."""
+"""Main package."""

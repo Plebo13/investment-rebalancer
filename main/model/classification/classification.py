@@ -1,14 +1,14 @@
-from dataclasses import dataclass
+from typing import List
 
 from prompt_toolkit import print_formatted_text, HTML
 
 from main.model.classification.category import Category
 
 
-@dataclass(eq=False)
 class Classification:
-    name: str
-    categories: "list[Category]"
+    def __init__(self, name: str, categories: List[Category]) -> None:
+        self.name = name
+        self.categories = categories
 
     @property
     def current_value(self) -> float:
