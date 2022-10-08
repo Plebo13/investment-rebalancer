@@ -1,7 +1,7 @@
 import argparse
 
 from prettytable import PrettyTable
-from prompt_toolkit import HTML, print_formatted_text, prompt
+from prompt_toolkit import prompt
 
 from main.model import configuration
 from main.model.errors import ConfigurationException
@@ -18,36 +18,25 @@ def main(config_path: str):
     total_value = 0.0
     for classification in configuration.classifications:
         total_value += classification.current_value
-    print(f"{total_value:.2f}€")
 
+    print(f"Total investment value: {total_value:.2f}€")
 
-def __init__(self, configuration_path: str = "config.json"):
-    """
-    Constructor for a given configuration path.
-    :param configuration_path: the configuration path
-    """
+    for classification in configuration.classifications:
+        print(f"{classification.name}:")
+        table = PrettyTable(["Category", "Value", "Allocation", "Target"])
+        for category in classification.categories:
+            current_allocation = category.current_value / total_value * 100
+            table.add_row(
+                [
+                    category.name,
+                    f"{category.current_value:.2f}€",
+                    f"{current_allocation:.2f}%",
+                    f"{category.target_allocation:.2f}%",
+                ]
+            )
 
-    self.total_value = 0.0
-
-
-def print_current_asset_allocation(self):
-    table = PrettyTable(["Asset", "Allocation", "Value"])
-    # for asset in Configuration.etfs:
-    #     assets_current_allocation = round(
-    #         asset.current_value / self.total_value * 100, 2
-    #     )
-    #     table.add_row(
-    #         [
-    #             asset.name,
-    #             str(assets_current_allocation) + " %",
-    #             str(round(asset.current_value, 2)) + " €",
-    #         ]
-    #     )
-
-    table.align = "l"
-    print_formatted_text(table.get_string(sortby="Allocation", reversesort=True))
-    format_str = "<b>Total value: <u>{value:.2f} €</u></b>"
-    print_formatted_text(HTML(format_str.format(value=self.total_value)))
+        table.align = "l"
+        print(table.get_string(sortby="Allocation", reversesort=True))
 
 
 def start(self):
