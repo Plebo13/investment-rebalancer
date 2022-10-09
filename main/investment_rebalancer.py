@@ -46,7 +46,7 @@ def main(config_path: str):
         classification.calculate_target_values(investment_value)
 
     # Print all categories with a delta.
-    print("Categories to invest in:\n")
+    print("\nCategories to invest in:")
     for classification in configuration.classifications:
         for category in classification.categories:
             if category.to_invest > 0.0:
@@ -60,7 +60,7 @@ def main(config_path: str):
         investable_categories = configuration.get_all_categories()
 
     # Print all ETF to invest in.
-    print("ETFs to invest in:\n")
+    print("\nETFs to invest in:")
     for etf in configuration.etfs.values():
         if etf.investment > 0.0:
             print(f"{etf.name}: {etf.investment:.2f}€")
