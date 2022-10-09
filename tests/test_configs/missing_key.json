@@ -15,16 +15,9 @@
       }
     }
   },
-  "investments": {
-    "LU1781541179": {
-      "name": "Lyxor Core MSCI World",
-      "enabled": true,
-      "quantity": 100,
-      "ter": 0.12
-    },
+  "etf": {
     "LU0635178014": {
       "name": "Lyxor MSCI Emerging Markets",
-      "enabled": true,
       "quantity": 50,
       "ter": 0.14
     }
