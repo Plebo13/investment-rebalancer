@@ -3,6 +3,7 @@ from typing import List
 from prompt_toolkit import print_formatted_text, HTML
 
 from main.model.classification.category import Category
+from main.model.asset.etf import ETF
 
 
 class Classification:
@@ -47,18 +48,17 @@ class Classification:
             category_target_value = target_value * (category.target_allocation / 100)
             category.delta_value = category_target_value - category.current_value
             if category.delta_value > investment_value:
-                category.investment += investment_value
+                category.to_invest += investment_value
                 investment_value = 0
             elif category.delta_value > 0:
-                category.investment += category.delta_value
+                category.to_invest += category.delta_value
                 investment_value -= category.delta_value
 
-    def is_valid(self) -> bool:
-        percentage = 0.0
+    def is_investible(self, etf: ETF) -> bool:
         for category in self.categories:
-            percentage += category.target_allocation
-
-        return percentage == 100.0
+            if etf in category.etfs and category.to_invest <= 0.0:
+                return False
+        return True
 
     def print(self):
         print_formatted_text(

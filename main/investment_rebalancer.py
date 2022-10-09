@@ -47,7 +47,30 @@ def main(config_path: str):
 
     for classification in configuration.classifications:
         for category in classification.categories:
-            print(f"{category.name}: {category.investment:.2f}€")
+            print(f"{category.name}: {category.to_invest:.2f}€")
+
+    print("\n")
+    for etf in configuration.get_investable_etfs():
+        print(etf.name)
+
+    print("\n")
+    for category in configuration.get_all_categories():
+        print(f"{category.name}: {category.to_invest:.2f}€")
+
+    print("\n")
+    investable_categories = configuration.get_all_categories()
+    while len(investable_categories) > 0 and investment_value > 0.0:
+        print(f"Investing {investment_value:.2f}€ in {investable_categories[0].name}")
+        investment_value = investable_categories[0].invest(
+            investment_value, configuration.get_investable_etfs()
+        )
+        print(f"New investment value: {investment_value:.2f}€")
+        investable_categories = configuration.get_all_categories()
+        print(f"New length of categories: {len(investable_categories)}")
+
+    print("\n")
+    for etf in configuration.etfs.values():
+        print(f"{etf.name}: {etf.investment:.2f}€")
 
 
 def rebalance(self, investment_value):

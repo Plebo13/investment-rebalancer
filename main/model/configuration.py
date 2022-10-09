@@ -26,11 +26,16 @@ def parse(config_path: str):
     etf_config = config["etf"]
     for etf in etf_config:
         try:
+            name = etf_config[etf]["name"]
+            print(f"Getting current price for {name}")
+            current_price = SharePP.get_etf_price(etf)
+            # current_price = 5.0
             etfs[etf] = ETF(
-                etf_config[etf]["name"],
+                etf,
+                name,
                 etf_config[etf]["enabled"],
                 etf_config[etf]["quantity"],
-                SharePP.get_etf_price(etf),
+                current_price,
                 etf_config[etf]["ter"],
             )
         except KeyError as e:
@@ -85,4 +90,25 @@ def parse_classifications(asset: DeepAsset, asset_config):
 
         asset.classifications.append(classification)
 
-    # parse_investments(asset, asset_config)
+
+def get_investable_etfs() -> Set[ETF]:
+    investable_etfs: Set[ETF] = []
+    for isin in etfs:
+        investible = True
+        for classification in classifications:
+            if not classification.is_investible(etfs[isin]):
+                investible = False
+                break
+        if investible:
+            investable_etfs.append(etfs[isin])
+    return investable_etfs
+
+
+def get_all_categories() -> List[Category]:
+    categories: List[Category] = []
+    for classification in classifications:
+        for category in classification.categories:
+            if category.to_invest > 0.0:
+                categories.append(category)
+    categories.sort(key=lambda x: x.to_invest)
+    return categories
