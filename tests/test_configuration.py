@@ -10,7 +10,7 @@ class ConfigurationTest(unittest.TestCase):
         with self.assertRaises(ConfigurationException) as cm:
             configuration.parse(config_path)
         self.assertEquals(
-            f"The given configuration does not exist: {config_path}", str(cm.exception)
+            f"The given configuration file does not exist: {config_path}", str(cm.exception)
         )
 
     def test_missing_key(self):
