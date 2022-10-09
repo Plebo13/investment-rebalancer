@@ -1,7 +1,5 @@
 from typing import List
 
-from prompt_toolkit import print_formatted_text, HTML
-
 from main.model.classification.category import Category
 from main.model.asset.etf import ETF
 
@@ -31,17 +29,6 @@ class Classification:
             return False
         return super().__eq__(other)
 
-    def __str__(self) -> str:
-        """
-        Creates a string with the classifications name, its current value and the strings for all categories.
-        :return: the string
-        """
-        result = self.name
-        result += f"\n{self.current_value:.2f}€"
-        for category in self.categories:
-            result += f"\n  {category}"
-        return result
-
     def calculate_target_values(self, investment_value: float):
         target_value = self.current_value + investment_value
         for category in self.categories:
@@ -59,15 +46,3 @@ class Classification:
             if etf in category.etfs and category.to_invest <= 0.0:
                 return False
         return True
-
-    def print(self):
-        print_formatted_text(
-            HTML("<b><u>{:<20} | {:s}</u></b>".format(self.name, "Allocation"))
-        )
-        for category in self.categories:
-            print_formatted_text(
-                "{:<20} | {:.2f}%".format(
-                    category.name, round(category.current_allocation * 100, 2)
-                )
-            )
-        print_formatted_text("")

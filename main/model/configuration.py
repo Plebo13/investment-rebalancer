@@ -5,7 +5,6 @@ from typing import Dict, List, Set
 from sharepp import SharePP
 from main.model.errors import ConfigurationException
 from main.model.asset.etf import ETF
-from main.model.asset.DeepAsset import DeepAsset
 from main.model.classification.category import Category
 from main.model.classification.classification import Classification
 
@@ -76,19 +75,6 @@ def parse_classification(name: str, categories_config) -> Classification:
             )
         )
     return Classification(name, categories)
-
-
-def parse_classifications(asset: DeepAsset, asset_config):
-    classifications_config = asset_config["classifications"]
-    for classification_config in classifications_config:
-        classification = Classification(classification_config)
-        categories_config = classifications_config[classification_config]
-        for category_str in categories_config:
-            category_config = categories_config[category_str]
-            category = Category(category_str, category_config["allocation"])
-            classification.categories.append(category)
-
-        asset.classifications.append(classification)
 
 
 def get_investable_etfs() -> Set[ETF]:

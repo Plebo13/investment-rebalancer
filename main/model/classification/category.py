@@ -7,6 +7,7 @@ class Category:
         self.name = name
         self.target_allocation = target_allocation
         self.etfs = etfs
+        self.etfs.sort(key=lambda x: x.ter)
         self.current_allocation: float = 0.0
         self.delta_value: float = 0.0
         self.to_invest: float = 0.0
@@ -22,17 +23,11 @@ class Category:
         for etf in self.etfs:
             if etf in investable_etfs:
                 if self.to_invest < investment:
-                    print(
-                        f"Investment value is smaller: {self.to_invest} vs. {investment}"
-                    )
                     etf.investment += self.to_invest
                     new_investment = investment - self.to_invest
                     self.to_invest = 0.0
                     return new_investment
                 else:
-                    print(
-                        f"Investment value is bigger: {self.to_invest} vs. {investment}"
-                    )
                     etf.investment += investment
                     self.to_invest -= investment
                     return 0.0
@@ -50,10 +45,3 @@ class Category:
         if not isinstance(other, Category):
             return False
         return other.name == self.name
-
-    def __str__(self) -> str:
-        """
-        Creates a string with the classifications name and its investment value.
-        :return: the string
-        """
-        return f"{self.name}: {self.to_invest:.2f}€"
