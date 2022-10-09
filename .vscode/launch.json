@@ -8,12 +8,12 @@
             "name": "Main",
             "type": "python",
             "request": "launch",
-            "program": "${workspaceFolder}/main/Main.py",
-            "args": ["${workspaceFolder}/configs/etf_config_beta.json"],
+            "program": "${workspaceFolder}/main/investment_rebalancer.py",
+            "args": ["-c","${workspaceFolder}/example_configs/valid.json"],
             "console": "integratedTerminal",
             "cwd": "${workspaceFolder}",
             "env": {
-                "PYTHONPATH": "${cwd}"
+                "PYTHONPATH": "${workspaceFolder}"
             }
         }
     ]
