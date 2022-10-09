@@ -5,7 +5,7 @@ from prompt_toolkit import prompt
 
 from main.model import configuration
 from main.model.errors import ConfigurationException
-from main.controller.NumberValidator import NumberValidator
+from main.controller.number_validator import NumberValidator
 
 
 def main(config_path: str):
