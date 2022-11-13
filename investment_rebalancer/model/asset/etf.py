@@ -8,7 +8,7 @@ class ETF:
         current_price: float,
         ter: float,
     ) -> None:
-        self.id = isin
+        self.isin = isin
         self.name = name
         self.enabled = enabled
         self.quantity = quantity
@@ -19,4 +19,4 @@ class ETF:
     def __eq__(self, other: object) -> bool:
         if not isinstance(other, ETF):
             return False
-        return other.id == self.id
+        return other.isin == self.isin
