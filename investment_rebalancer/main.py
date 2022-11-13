@@ -5,9 +5,9 @@ from pathlib import Path
 from prettytable import PrettyTable
 from prompt_toolkit import prompt
 
-from main.controller.number_validator import NumberValidator
-from main.model import configuration
-from main.model.errors import ConfigurationException
+from investment_rebalancer.controller.number_validator import NumberValidator
+from investment_rebalancer.model import configuration
+from investment_rebalancer.model.errors import ConfigurationException
 
 
 def main():

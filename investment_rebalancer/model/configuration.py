@@ -3,10 +3,10 @@ import os
 from typing import Dict, List, Set
 
 from sharepp import SharePP
-from main.model.errors import ConfigurationException
-from main.model.asset.etf import ETF
-from main.model.classification.category import Category
-from main.model.classification.classification import Classification
+from investment_rebalancer.model.errors import ConfigurationException
+from investment_rebalancer.model.asset.etf import ETF
+from investment_rebalancer.model.classification.category import Category
+from investment_rebalancer.model.classification.classification import Classification
 
 etfs: Dict[str, ETF] = {}
 classifications: List[Classification] = []

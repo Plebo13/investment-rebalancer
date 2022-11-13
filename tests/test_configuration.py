@@ -1,7 +1,7 @@
 import unittest
 
-from main.model import configuration
-from main.model.errors import ConfigurationException
+from investment_rebalancer.model import configuration
+from investment_rebalancer.model.errors import ConfigurationException
 
 
 class ConfigurationTest(unittest.TestCase):

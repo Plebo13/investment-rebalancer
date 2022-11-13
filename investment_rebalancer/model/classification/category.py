@@ -1,5 +1,5 @@
 from typing import List, Set
-from main.model.asset.etf import ETF
+from investment_rebalancer.model.asset.etf import ETF
 
 
 class Category:

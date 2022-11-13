@@ -1,7 +1,7 @@
 from typing import List
 
-from main.model.classification.category import Category
-from main.model.asset.etf import ETF
+from investment_rebalancer.model.classification.category import Category
+from investment_rebalancer.model.asset.etf import ETF
 
 
 class Classification:
