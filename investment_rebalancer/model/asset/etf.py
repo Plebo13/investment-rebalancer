@@ -1,14 +1,14 @@
 class ETF:
     def __init__(
         self,
-        id: str,
+        isin: str,
         name: str,
         enabled: bool,
         quantity: float,
         current_price: float,
         ter: float,
     ) -> None:
-        self.id = id
+        self.id = isin
         self.name = name
         self.enabled = enabled
         self.quantity = quantity
