@@ -1,4 +1,6 @@
 import argparse
+import os
+from pathlib import Path
 
 from prettytable import PrettyTable
 from prompt_toolkit import prompt
@@ -70,6 +72,10 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(
         description="Calculate investments for rebalancing."
     )
-    parser.add_argument("-c", "--config", default="config.json")
+    parser.add_argument(
+        "-c",
+        "--config",
+        default=os.path.join(Path.home(), ".investment-rebalancer/config.json"),
+    )
     args = parser.parse_args()
     main(args.config)
