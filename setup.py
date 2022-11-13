@@ -5,7 +5,7 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="investment-rebalancer",
-    version="1.0",
+    version="0.9",
     author="Lukas Brauckmann",
     author_email="lukas.brauckmann@gmail.com",
     description="A simple tool helping you to calculate your portfolio rebalancing.",
