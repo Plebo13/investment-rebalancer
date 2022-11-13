@@ -65,7 +65,7 @@ def main():
                 print(f"{category.name}: {category.to_invest:.2f}€")
 
     investable_categories = configuration.get_all_categories()
-    while len(investable_categories) > 0 and investment_value > 0.0:
+    while len(investable_categories) > 0 and round(investment_value, 2) > 0.0:
         investment_value = investable_categories[0].invest(
             investment_value, configuration.get_investable_etfs()
         )
@@ -75,7 +75,7 @@ def main():
     print("\nETFs to invest in:")
     for etf in configuration.etfs.values():
         if etf.investment > 0.0:
-            print(f"{etf.name}: {etf.investment:.2f}€")
+            print(f"{etf.name}: {round(etf.investment)}€")
 
 
 if __name__ == "__main__":
