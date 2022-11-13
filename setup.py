@@ -13,7 +13,13 @@ setuptools.setup(
     long_description_content_type="text/markdown",
     url="https://github.com/Plebo13/investment-rebalancer",
     license="Apache License 2.0",
-    packages=["main"],
+    packages=[
+        "investment_rebalancer",
+        "investment_rebalancer.model",
+        "investment_rebalancer.model.asset",
+        "investment_rebalancer.model.classification",
+        "investment_rebalancer.controller",
+    ],
     classifiers=[
         "Programming Language :: Python :: 3",
         "License :: OSI Approved :: Apache Software License",
@@ -22,7 +28,7 @@ setuptools.setup(
     install_requires=["prettytable", "prompt_toolkit", "sharepp"],
     entry_points={
         "console_scripts": [
-            "investment = investment-rebalancer:main",
+            "investment-rebalancer = investment_rebalancer.main:main",
         ]
     },
 )
