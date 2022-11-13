@@ -2,49 +2,61 @@
   "classifications": {
     "Regions": {
       "Developed World": {
-        "percentage": 70.0
+        "target_allocation": 70.0,
+        "assets": [
+          "LU1781541179",
+          "IE00BF4RFH31"
+        ]
       },
       "Emerging Markets": {
-        "percentage": 30.0
+        "target_allocation": 30.0,
+        "assets": [
+          "LU0635178014",
+          "IE00B48X4842"
+        ]
       }
     },
     "Factor": {
       "Large Cap": {
-        "percentage": 85.0
+        "target_allocation": 85.0,
+        "assets": [
+          "LU1781541179",
+          "LU0635178014"
+        ]
       },
       "Small Cap": {
-        "percentage": 15.0
+        "target_allocation": 15.0,
+        "assets": [
+          "IE00BF4RFH31",
+          "IE00B48X4842"
+        ]
       }
     }
   },
-  "investments": {
+  "etf": {
     "LU1781541179": {
       "name": "Lyxor Core MSCI World",
       "enabled": true,
       "quantity": 200,
-      "ter": 0.12,
-      "categories": "Developed World,Large Cap"
+      "ter": 0.12
     },
     "LU0635178014": {
       "name": "Lyxor MSCI Emerging Markets",
       "enabled": true,
       "quantity": 50,
-      "ter": 0.14,
-      "categories": "Emerging Markets,Large Cap"
+      "ter": 0.14
     },
     "IE00BF4RFH31": {
       "name": "iShares MSCI World Small Cap",
       "enabled": true,
       "quantity": 65,
-      "ter": 0.35,
-      "categories": "Developed World,Small Cap"
+      "ter": 0.35
     },
     "IE00B48X4842": {
       "name": "SPDR MSCI Emerging Markets Small Cap",
       "enabled": true,
       "quantity": 2,
-      "ter": 0.55,
-      "categories": "Emerging Markets,Small Cap"
+      "ter": 0.55
     }
   }
 }
