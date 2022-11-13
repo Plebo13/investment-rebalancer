@@ -5,14 +5,24 @@ from pathlib import Path
 from prettytable import PrettyTable
 from prompt_toolkit import prompt
 
+from main.controller.number_validator import NumberValidator
 from main.model import configuration
 from main.model.errors import ConfigurationException
-from main.controller.number_validator import NumberValidator
 
 
-def main(config_path: str):
+def main():
+    parser = argparse.ArgumentParser(
+        description="Calculate investments for rebalancing."
+    )
+    parser.add_argument(
+        "-c",
+        "--config",
+        default=os.path.join(Path.home(), ".investment-rebalancer/config.json"),
+    )
+    args = parser.parse_args()
+
     try:
-        configuration.parse(config_path)
+        configuration.parse(args.config)
     except ConfigurationException as e:
         print(f"The configuration could not be read: {str(e)}")
         return
@@ -69,13 +79,4 @@ def main(config_path: str):
 
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser(
-        description="Calculate investments for rebalancing."
-    )
-    parser.add_argument(
-        "-c",
-        "--config",
-        default=os.path.join(Path.home(), ".investment-rebalancer/config.json"),
-    )
-    args = parser.parse_args()
-    main(args.config)
+    main()
