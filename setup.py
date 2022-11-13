@@ -1,7 +1,7 @@
 import setuptools
 
-with open("README.md", "r") as fh:
-    long_description = fh.read()
+with open("README.md", "r") as readme_file:
+    long_description = readme_file.read()
 
 setuptools.setup(
     name="investment-rebalancer",
@@ -25,7 +25,7 @@ setuptools.setup(
         "License :: OSI Approved :: Apache Software License",
         "Operating System :: OS Independent",
     ],
-    install_requires=["prettytable", "prompt_toolkit", "sharepp"],
+    install_requires=["prettytable~=2.4.0", "prompt_toolkit==3.0.29", "sharepp==1.0.1"],
     entry_points={
         "console_scripts": [
             "investment-rebalancer = investment_rebalancer.main:main",
