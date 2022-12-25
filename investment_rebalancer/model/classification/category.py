@@ -21,7 +21,7 @@ class Category:
 
     def invest(self, investment: float, investable_etfs: Set[ETF]) -> float:
         for etf in self.etfs:
-            if etf in investable_etfs:
+            if etf in investable_etfs and etf.enabled:
                 if self.to_invest < investment:
                     etf.investment += self.to_invest
                     new_investment = investment - self.to_invest
