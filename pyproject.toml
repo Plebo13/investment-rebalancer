@@ -1,0 +1,31 @@
+[tool.poetry]
+name = "investment-rebalancer"
+version = "1.0.0"
+description = "A simple tool helping you to calculate your portfolio rebalancing."
+authors = ["Lukas Brauckmann <lukas.brauckmann@gmail.com>"]
+maintainers = ["Lukas Brauckmann <lukas.brauckmann@gmail.com>"]
+license = "Apache-2.0"
+readme = "README.md"
+repository = "https://github.com/Plebo13/investment-rebalancer"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: Apache Software License",
+    "Operating System :: OS Independent",
+]
+packages = [{ include = "investment_rebalancer" }]
+
+[tool.poetry.dependencies]
+python = "^3.8"
+prettytable = "^3.8.0"
+prompt-toolkit = "^3.0.39"
+sharepp = "^1.0.1"
+
+[tool.poetry.group.tests.dependencies]
+pytest = "^7.4.0"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.poetry.scripts]
+my_package_cli = "investment_rebalancer.main:main"
