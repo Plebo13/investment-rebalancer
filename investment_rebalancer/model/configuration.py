@@ -1,9 +1,16 @@
 import json
 import os
-from typing import Dict, List, Set
+from typing import Dict, List, Optional, Set
+from bs4 import BeautifulSoup
+from pydantic import BaseModel, model_validator
+from pydantic_core import ValidationError
+from pydantic_xml import BaseXmlModel, element
 
 from sharepp import SharePP
-from investment_rebalancer.model.errors import ConfigurationException
+from investment_rebalancer.model.errors import (
+    ConfigurationException,
+    IsinConfigurationException,
+)
 from investment_rebalancer.model.asset.etf import ETF
 from investment_rebalancer.model.classification.category import Category
 from investment_rebalancer.model.classification.classification import Classification
@@ -12,53 +19,40 @@ etfs: Dict[str, ETF] = {}
 classifications: List[Classification] = []
 
 
+class Security(BaseXmlModel, tag="security"):
+    uuid: str = element(tag="uuid")
+    name: str = element(tag="name")
+    isin: Optional[str] = element(tag="isin", default=None)
+
+    # @model_validator(mode="after")
+    # def check_isin(self) -> "Security":
+    #     if not self.isin:
+    #         raise IsinConfigurationException(self.name)
+    #     return self
+
+
 def parse(config_path: str):
     if not os.path.isfile(config_path):
         raise ConfigurationException(
             f"The given configuration file does not exist: {config_path}"
         )
 
-    with open(config_path) as configuration_file:
-        config = json.load(configuration_file)
+    with open(config_path) as config_file:
+        config = config_file.read()
 
-    # Read etf configs
-    etf_config = config["etf"]
-    for etf in etf_config:
-        try:
-            name = etf_config[etf]["name"]
-            print(f"Getting current price for {name}")
-            current_price = SharePP.get_etf_price(etf)
-            # current_price = 5.0
-            etfs[etf] = ETF(
-                etf,
-                name,
-                etf_config[etf]["enabled"],
-                etf_config[etf]["quantity"],
-                current_price,
-                etf_config[etf]["ter"],
-            )
-        except KeyError as e:
-            raise ConfigurationException(f"Key {str(e)} missing in ETF {etf}!")
+    xml = BeautifulSoup(config, "xml")
+    securities: List[Security] = list()
+    errors = []
+    for security in xml.find("securities"):
+        security = str(security).strip()
+        if security:
+            try:
+                securities.append(Security.from_xml(security))
+            except ValidationError:
+                errors.append(security)
 
-    if not etfs:
-        raise ConfigurationException("No ETFs configured!")
-
-    # Read classification configs
-    classification_config = config["classifications"]
-    for classification in classification_config:
-        try:
-            classifications.append(
-                parse_classification(
-                    classification, classification_config[classification]
-                )
-            )
-        except KeyError as e:
-            raise ConfigurationException(
-                f"Key {str(e)} missing in classification {classification}!"
-            )
-
-    if not classifications:
-        raise ConfigurationException("No classifications configured!")
+    print(f"Warning: Could not parse {len(errors)} securities.")
+    print(f"Parsed {len(securities)} securities.")
 
 
 def parse_classification(name: str, categories_config) -> Classification:
