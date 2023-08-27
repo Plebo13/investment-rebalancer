@@ -1,5 +1,0 @@
-prettytable~=2.4.0
-prompt_toolkit==3.0.29
-sharepp==1.0.1
-build
-twine
