@@ -1,15 +1,11 @@
-import json
 import os
 from typing import Dict, List, Optional, Set
 from bs4 import BeautifulSoup
-from pydantic import BaseModel, model_validator
 from pydantic_core import ValidationError
 from pydantic_xml import BaseXmlModel, element
 
-from sharepp import SharePP
 from investment_rebalancer.model.errors import (
     ConfigurationException,
-    IsinConfigurationException,
 )
 from investment_rebalancer.model.asset.etf import ETF
 from investment_rebalancer.model.classification.category import Category
@@ -23,12 +19,6 @@ class Security(BaseXmlModel, tag="security"):
     uuid: str = element(tag="uuid")
     name: str = element(tag="name")
     isin: Optional[str] = element(tag="isin", default=None)
-
-    # @model_validator(mode="after")
-    # def check_isin(self) -> "Security":
-    #     if not self.isin:
-    #         raise IsinConfigurationException(self.name)
-    #     return self
 
 
 def parse(config_path: str):
