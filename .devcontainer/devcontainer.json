@@ -1,0 +1,20 @@
+{
+    "name": "edgar",
+    "image": "mcr.microsoft.com/devcontainers/python:3.11",
+    "features": {
+        "ghcr.io/devcontainers-contrib/features/poetry:2": {
+          "version": "latest"
+        },
+        "ghcr.io/devcontainers-contrib/features/black:2": {
+          "version": "latest"
+        },
+        "ghcr.io/devcontainers-contrib/features/flake8:2": {
+          "version": "latest"
+        }
+    },
+    "customizations": {
+      "vscode": {
+        "extensions": ["njpwerner.autodocstring","aaron-bond.better-comments"]
+      }
+    }
+  }
