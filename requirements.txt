@@ -10,7 +10,7 @@ idna==3.3
 pipenv==2022.1.8
 platformdirs==2.4.0
 pycosat==0.6.3
-requests==2.26.0
+requests==2.31.0
 ruamel.yaml==0.17.17
 ruamel.yaml.clib==0.2.6
 sharepp==0.3
