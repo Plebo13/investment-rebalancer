@@ -9,7 +9,7 @@ class ConfigurationTest(unittest.TestCase):
         config_path = "tests/test_configs/invalid.json"
         with self.assertRaises(ConfigurationException) as cm:
             configuration.parse(config_path)
-        self.assertEquals(
+        self.assertEqual(
             f"The given configuration file does not exist: {config_path}", str(cm.exception)
         )
 
@@ -25,7 +25,7 @@ class ConfigurationTest(unittest.TestCase):
         config_path = "tests/test_configs/no_etfs.json"
         with self.assertRaises(ConfigurationException) as cm:
             configuration.parse(config_path)
-        self.assertEquals("No ETFs configured!", str(cm.exception))
+        self.assertEqual("No ETFs configured!", str(cm.exception))
 
     def test_valid_parsing(self):
         config_path = "tests/test_configs/valid.json"
