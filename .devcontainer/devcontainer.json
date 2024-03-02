@@ -1,0 +1,36 @@
+{
+  "name": "edgar",
+  "image": "mcr.microsoft.com/devcontainers/python:3.11",
+  "features": {
+    "ghcr.io/devcontainers-contrib/features/poetry:2": {
+      "version": "latest"
+    }
+  },
+  "containerEnv": {
+    "POETRY_VIRTUALENVS_CREATE": "true",
+    "POETRY_VIRTUALENVS_IN_PROJECT": "true"
+  },
+  "customizations": {
+    "vscode": {
+      "settings": {
+        "flake8.args": ["--config=.config/linter.toml"],
+        "black-formatter.args": ["--config=.config/linter.toml"],
+        "editor.formatOnSave": true,
+        "files.autoSave": "afterDelay",
+        "python.testing.pytestArgs": ["tests"],
+        "python.testing.unittestEnabled": false,
+        "python.testing.pytestEnabled": true
+      },
+      "extensions": [
+        "njpwerner.autodocstring",
+        "aaron-bond.better-comments",
+        "tamasfe.even-better-toml",
+        "ms-python.black-formatter",
+        "ms-python.black-formatter",
+        "esbenp.prettier-vscode",
+        "ms-python.isort",
+        "codacy-app.codacy"
+      ]
+    }
+  }
+}

@@ -1,0 +1,30 @@
+{
+  "assets": {
+    "Cryptocurrencies": {
+      "allocation": 100.0,
+      "investments": {
+        "bitcoin": {
+          "type": "crypto",
+          "name": "Bitcoin",
+          "allocation": 50.0,
+          "enabled": true,
+          "quantity": 0.02
+        },
+        "ethereum": {
+          "type": "crypto",
+          "name": "Ethereum",
+          "allocation": 30.0,
+          "enabled": true,
+          "quantity": 0.2
+        },
+        "dogecoin": {
+          "type": "crypto",
+          "name": "Dogecoin",
+          "allocation": 20.0,
+          "enabled": true,
+          "quantity": 5000
+        }
+      }
+    }
+  }
+}
