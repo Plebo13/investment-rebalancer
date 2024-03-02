@@ -1,8 +1,7 @@
 import json
 import os
 from typing import Dict, List, Set
-
-from sharepp import SharePP
+import sharepp
 from investment_rebalancer.model.errors import ConfigurationException
 from investment_rebalancer.model.asset.etf import ETF
 from investment_rebalancer.model.classification.category import Category
@@ -27,7 +26,7 @@ def parse(config_path: str):
         try:
             name = etf_config[etf]["name"]
             print(f"Getting current price for {name}")
-            current_price = SharePP.get_etf_price(etf)
+            current_price = sharepp.get_etf_price(etf)
             # current_price = 5.0
             etfs[etf] = ETF(
                 etf,
