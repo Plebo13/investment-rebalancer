@@ -15,7 +15,7 @@ classifiers = [
 packages = [{ include = "investment_rebalancer" }]
 
 [tool.poetry.dependencies]
-python = ">=3.10,<4.0"
+python = "^3.10"
 prettytable = "^3.8.0"
 prompt-toolkit = "^3.0.39"
 sharepp = "^1.1.2"
