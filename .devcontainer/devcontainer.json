@@ -6,13 +6,17 @@
       "version": "latest"
     }
   },
+  "containerEnv": {
+    "POETRY_VIRTUALENVS_CREATE": "true",
+    "POETRY_VIRTUALENVS_IN_PROJECT": "true"
+  },
   "customizations": {
     "vscode": {
       "settings": {
-          "flake8.args": ["--config=.config/linter.toml"],
-          "black-formatter.args": ["--config=.config/linter.toml"],
-          "editor.formatOnSave": true,
-          "files.autoSave": "afterDelay"
+        "flake8.args": ["--config=.config/linter.toml"],
+        "black-formatter.args": ["--config=.config/linter.toml"],
+        "editor.formatOnSave": true,
+        "files.autoSave": "afterDelay"
       },
       "extensions": [
         "njpwerner.autodocstring",
@@ -20,7 +24,9 @@
         "tamasfe.even-better-toml",
         "ms-python.black-formatter",
         "ms-python.black-formatter",
-        "esbenp.prettier-vscode"
+        "esbenp.prettier-vscode",
+        "ms-python.isort",
+        "codacy-app.codacy"
       ]
     }
   }
