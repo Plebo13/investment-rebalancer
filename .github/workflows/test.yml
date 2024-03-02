@@ -27,7 +27,7 @@ jobs:
         run: poetry run flake8 --config=.config/linter.toml
       - name: Test with pytest
         run: |
-          poetry run pytest --cov=sharepp --cov-report xml tests/
+          poetry run pytest --cov=investment_rebalancer --cov-report xml tests/
       - name: Publishing coverage data
         if: github.actor != 'dependabot[bot]'
         run: |
