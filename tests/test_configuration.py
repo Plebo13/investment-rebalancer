@@ -17,7 +17,7 @@ class ConfigurationTest(unittest.TestCase):
         config_path = "tests/test_configs/missing_key.json"
         with self.assertRaises(ConfigurationException) as cm:
             configuration.parse(config_path)
-        self.assertEquals(
+        self.assertEqual(
             "Key 'enabled' missing in ETF LU0635178014!", str(cm.exception)
         )
 
