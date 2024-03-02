@@ -1,5 +1,9 @@
 # Investment Rebalancer
 
+![Testing](https://github.com/Plebo13/investment-rebalancer/actions/workflows/test.yml/badge.svg)
+[![Codacy Badge](https://app.codacy.com/project/badge/Grade/0a3183c56ab44966aef9e03ac3c99b45)](https://app.codacy.com/gh/Plebo13/investment-rebalancer/dashboard?utm_source=gh&utm_medium=referral&utm_content=&utm_campaign=Badge_grade)
+[![Codacy Badge](https://app.codacy.com/project/badge/Coverage/0a3183c56ab44966aef9e03ac3c99b45)](https://app.codacy.com/gh/Plebo13/investment-rebalancer/dashboard?utm_source=gh&utm_medium=referral&utm_content=&utm_campaign=Badge_coverage)
+
 ## Overview
 
 investment-rebalancer is a terminal application that helps one to rebalance one's portfolio. A configuration is used to define the classifications into which you want to divide your portfolio (e.g. regions, factor investing, core/satellite).
