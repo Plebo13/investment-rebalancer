@@ -39,7 +39,7 @@ class ModelTest(unittest.TestCase):
             quantity=quantity,
             ter=0.1,
         )
-        self.assertEqual(etf1,etf2)
+        self.assertEqual(etf1, etf2)
 
         etf1 = ETF(
             isin="LU1781541179",
@@ -55,4 +55,4 @@ class ModelTest(unittest.TestCase):
             quantity=quantity,
             ter=0.1,
         )
-        self.assertNotEqual(etf1,etf2)
+        self.assertNotEqual(etf1, etf2)
