@@ -29,12 +29,12 @@ def parse(config_path: str):
             current_price = sharepp.get_etf_price(etf)
             # current_price = 5.0
             etfs[etf] = ETF(
-                etf,
-                name,
-                etf_config[etf]["enabled"],
-                etf_config[etf]["quantity"],
-                current_price,
-                etf_config[etf]["ter"],
+                isin=etf,
+                name=name,
+                enabled=etf_config[etf]["enabled"],
+                quantity=etf_config[etf]["quantity"],
+                current_price=current_price,
+                ter=etf_config[etf]["ter"],
             )
         except KeyError as e:
             raise ConfigurationException(f"Key {str(e)} missing in ETF {etf}!")
