@@ -29,7 +29,8 @@
         "ms-python.black-formatter",
         "esbenp.prettier-vscode",
         "ms-python.isort",
-        "codacy-app.codacy"
+        "codacy-app.codacy",
+        "redhat.vscode-yaml"
       ]
     }
   }
