@@ -609,22 +609,15 @@ files = [
 ]
 
 [[package]]
-name = "pytermgui"
-version = "7.7.1"
-description = "Python TUI framework with mouse support, modular widget system, customizable and rapid terminal markup language and more!"
+name = "pytermtk"
+version = "0.39.0a6"
+description = "Python Terminal Toolkit"
 optional = false
-python-versions = ">=3.8"
+python-versions = ">=3.9"
 files = [
-    {file = "pytermgui-7.7.1-py3-none-any.whl", hash = "sha256:d09d2bd77164191bd60e0286414f66ca660ef6f6636f1f0f5f55dc3d3dbc6105"},
-    {file = "pytermgui-7.7.1.tar.gz", hash = "sha256:030458be5c3cbeaab17fb9aa3d19e6232be4ce4a3f54418fe13bb97fdef446db"},
+    {file = "pyTermTk-0.39.0a6-py3-none-any.whl", hash = "sha256:d9763c06ca19d93dbf870fc6f63a7a9a890ac2a09dacb54fc34fb7fb90c85912"},
+    {file = "pyTermTk-0.39.0a6.tar.gz", hash = "sha256:3dea9a57f3f7112e2c64f1b18f71706b40a5b9425ab0351dcb377a35b63f8e13"},
 ]
-
-[package.dependencies]
-typing-extensions = "*"
-wcwidth = "*"
-
-[package.extras]
-yaml = ["pyyaml"]
 
 [[package]]
 name = "pytest"
@@ -767,4 +760,4 @@ files = [
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.10"
-content-hash = "2dfeca561c9762b6be3bb4db2fb323f310f73e4ac14684d6ec565128678faf2c"
+content-hash = "821ba859d20cad7833c93101e1890483671b8f846ce8d2ef8608e5f4cf59a5a1"
