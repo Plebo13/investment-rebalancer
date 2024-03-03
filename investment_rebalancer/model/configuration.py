@@ -1,99 +1,59 @@
-import json
 import os
-from typing import Dict, List, Set
-import sharepp
-from investment_rebalancer.model.errors import ConfigurationException
+from typing import List, Set
+
+import yaml
+from pydantic import BaseModel
+from pydantic_yaml import parse_yaml_raw_as
+
 from investment_rebalancer.model.asset.etf import ETF
 from investment_rebalancer.model.classification.category import Category
 from investment_rebalancer.model.classification.classification import Classification
 
-etfs: Dict[str, ETF] = {}
-classifications: List[Classification] = []
+
+class ConfigurationException(BaseException):
+    pass
 
 
-def parse(config_path: str):
+class Configuration(BaseModel):
+    classifications: List[Classification]
+    etfs: List[ETF]
+
+    def get_investable_etfs(self) -> Set[ETF]:
+        """Returns all investible ETF's.
+        An investible ETF is one that is not part of a classification in which should not be invested.
+
+        :return: set of all investible ETF's
+        """
+        investable_etfs: Set[ETF] = []
+        for etf in self.etfs:
+            investible = True
+            for classification in self.classifications:
+                if not classification.is_investible(etf):
+                    investible = False
+                    break
+            if investible:
+                investable_etfs.append(etf)
+        return investable_etfs
+
+    def get_all_categories(self) -> List[Category]:
+        categories: List[Category] = []
+        for classification in self.classifications:
+            for category in classification.categories:
+                if category.to_invest > 0.0:
+                    categories.append(category)
+        categories.sort(key=lambda x: x.to_invest)
+        return categories
+
+
+def parse(config_path: str) -> Configuration:
+    # * Check if configuration file exists
     if not os.path.isfile(config_path):
         raise ConfigurationException(
             f"The given configuration file does not exist: {config_path}"
         )
 
-    with open(config_path) as configuration_file:
-        config = json.load(configuration_file)
+    # * Load configuration data
+    with open(config_path) as config_file:
+        config_data = config_file.read()
 
-    # Read etf configs
-    etf_config = config["etf"]
-    for etf in etf_config:
-        try:
-            name = etf_config[etf]["name"]
-            print(f"Getting current price for {name}")
-            current_price = sharepp.get_etf_price(etf)
-            # current_price = 5.0
-            etfs[etf] = ETF(
-                isin=etf,
-                name=name,
-                enabled=etf_config[etf]["enabled"],
-                quantity=etf_config[etf]["quantity"],
-                current_price=current_price,
-                ter=etf_config[etf]["ter"],
-            )
-        except KeyError as e:
-            raise ConfigurationException(f"Key {str(e)} missing in ETF {etf}!")
-
-    if not etfs:
-        raise ConfigurationException("No ETFs configured!")
-
-    # Read classification configs
-    classification_config = config["classifications"]
-    for classification in classification_config:
-        try:
-            classifications.append(
-                parse_classification(
-                    classification, classification_config[classification]
-                )
-            )
-        except KeyError as e:
-            raise ConfigurationException(
-                f"Key {str(e)} missing in classification {classification}!"
-            )
-
-    if not classifications:
-        raise ConfigurationException("No classifications configured!")
-
-
-def parse_classification(name: str, categories_config) -> Classification:
-    categories: Set[Category] = []
-    for category_config in categories_config:
-        assets: List[ETF] = []
-        for asset_config in categories_config[category_config]["assets"]:
-            assets.append(etfs[asset_config])
-        categories.append(
-            Category(
-                category_config,
-                categories_config[category_config]["target_allocation"],
-                assets,
-            )
-        )
-    return Classification(name, categories)
-
-
-def get_investable_etfs() -> Set[ETF]:
-    investable_etfs: Set[ETF] = []
-    for isin in etfs:
-        investible = True
-        for classification in classifications:
-            if not classification.is_investible(etfs[isin]):
-                investible = False
-                break
-        if investible:
-            investable_etfs.append(etfs[isin])
-    return investable_etfs
-
-
-def get_all_categories() -> List[Category]:
-    categories: List[Category] = []
-    for classification in classifications:
-        for category in classification.categories:
-            if category.to_invest > 0.0:
-                categories.append(category)
-    categories.sort(key=lambda x: x.to_invest)
-    return categories
+    return parse_yaml_raw_as(Configuration, config_data)

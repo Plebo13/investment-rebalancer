@@ -11,48 +11,51 @@ class ModelTest(unittest.TestCase):
         self.assertTrue("1234 is not a valid ISIN!" in str(cm.exception))
 
     def test_value_calculation(self):
-        current_price = random.uniform(0.1, 9.9)
         quantity = random.randint(1, 99)
         etf = ETF(
             isin="LU1781541179",
             name="test etf",
-            current_price=current_price,
             quantity=quantity,
             ter=0.1,
+            classifications={},
+            enabled=True,
         )
-        self.assertEqual(current_price * quantity, etf.current_value)
+        self.assertEqual(etf.current_price * quantity, etf.current_value)
 
     def test_equals(self):
-        current_price = random.uniform(0.1, 9.9)
         quantity = random.randint(1, 99)
         etf1 = ETF(
             isin="LU1781541179",
             name="test etf",
-            current_price=current_price,
             quantity=quantity,
             ter=0.1,
+            classifications={},
+            enabled=True,
         )
         etf2 = ETF(
             isin="LU1781541179",
             name="test etf",
-            current_price=current_price,
             quantity=quantity,
             ter=0.1,
+            classifications={},
+            enabled=True,
         )
         self.assertEqual(etf1, etf2)
 
         etf1 = ETF(
             isin="LU1781541179",
             name="test etf",
-            current_price=current_price,
             quantity=quantity,
             ter=0.1,
+            classifications={},
+            enabled=True,
         )
         etf2 = ETF(
             isin="LU0635178014",
             name="test etf",
-            current_price=current_price,
             quantity=quantity,
             ter=0.1,
+            classifications={},
+            enabled=True,
         )
         self.assertNotEqual(etf1, etf2)

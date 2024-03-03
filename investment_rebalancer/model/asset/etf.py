@@ -1,3 +1,4 @@
+from functools import cached_property
 from typing import Dict
 
 import sharepp
@@ -14,7 +15,7 @@ class ETF(BaseModel):
     investment: float = Field(default=0.0)
 
     @computed_field
-    @property
+    @cached_property
     def current_price(self) -> float:
         return sharepp.get_etf_price(self.isin)
 

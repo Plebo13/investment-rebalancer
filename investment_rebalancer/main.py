@@ -7,7 +7,6 @@ from prompt_toolkit import prompt
 
 from investment_rebalancer.controller.number_validator import NumberValidator
 from investment_rebalancer.model import configuration
-from investment_rebalancer.model.errors import ConfigurationException
 
 
 def main():
@@ -23,7 +22,7 @@ def main():
 
     try:
         configuration.parse(args.config)
-    except ConfigurationException as e:
+    except configuration.ConfigurationException as e:
         print(f"The configuration could not be read: {str(e)}")
         return
 
