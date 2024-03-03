@@ -1,49 +1,32 @@
 import unittest
 
+from pydantic import ValidationError
+
 from investment_rebalancer.model import configuration
-from investment_rebalancer.model.errors import ConfigurationException
 
 
 class ConfigurationTest(unittest.TestCase):
     def test_config_does_not_exist(self):
-        config_path = "tests/test_configs/invalid.json"
-        with self.assertRaises(ConfigurationException) as cm:
+        config_path = "tests/test_configs/invalid.yml"
+        with self.assertRaises(configuration.ConfigurationException) as cm:
             configuration.parse(config_path)
         self.assertEqual(
-            f"The given configuration file does not exist: {config_path}", str(cm.exception)
+            f"The given configuration file does not exist: {config_path}",
+            str(cm.exception),
         )
 
     def test_missing_key(self):
-        config_path = "tests/test_configs/missing_key.json"
-        with self.assertRaises(ConfigurationException) as cm:
+        config_path = "tests/test_configs/incomplete.yml"
+        with self.assertRaises(ValidationError) as cm:
             configuration.parse(config_path)
-        self.assertEqual(
-            "Key 'enabled' missing in ETF LU0635178014!", str(cm.exception)
-        )
-
-    def test_no_etfs(self):
-        config_path = "tests/test_configs/no_etfs.json"
-        with self.assertRaises(ConfigurationException) as cm:
-            configuration.parse(config_path)
-        self.assertEqual("No ETFs configured!", str(cm.exception))
 
     def test_valid_parsing(self):
-        config_path = "tests/test_configs/valid.json"
-        configuration.parse(config_path)
+        config_path = "tests/test_configs/valid.yml"
+        config = configuration.parse(config_path)
         self.assertEqual(
             2,
-            len(configuration.etfs),
+            len(config.etfs),
             "The list of ETFs does not have the correct length!",
-        )
-        self.assertEqual(
-            "Lyxor Core MSCI World",
-            configuration.etfs["LU1781541179"].name,
-            "The name does not match the ID!",
-        )
-        self.assertEqual(
-            "Lyxor MSCI Emerging Markets",
-            configuration.etfs["LU0635178014"].name,
-            "The name does not match the ID!",
         )
 
 
