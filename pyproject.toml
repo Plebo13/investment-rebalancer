@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "investment-rebalancer"
-version = "1.0.0"
+version = "1.0.1"
 description = "A simple tool helping you to calculate your portfolio rebalancing."
 authors = ["Lukas Brauckmann <lukas.brauckmann@gmail.com>"]
 maintainers = ["Lukas Brauckmann <lukas.brauckmann@gmail.com>"]
