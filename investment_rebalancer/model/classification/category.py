@@ -4,7 +4,6 @@ from pydantic import BaseModel, Field
 
 
 class Category(BaseModel):
-    key: str
     name: str
     target_allocation: float
     current_allocation: float = Field(ge=0.0, default=0.0)

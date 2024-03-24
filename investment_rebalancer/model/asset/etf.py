@@ -17,6 +17,7 @@ class ETF(BaseModel):
     @computed_field
     @cached_property
     def current_price(self) -> float:
+        print(f"Getting current price for '{self.name}'")
         return sharepp.get_etf_price(self.isin)
 
     @computed_field

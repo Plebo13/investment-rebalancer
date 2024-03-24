@@ -2,10 +2,10 @@ classifications:
   - key: region
     name: Region
     categories:
-      - key: developed_world
+      developed_world:
         name: Developed World
         target_allocation: 70.0
-      - key: emerging_markets
+      emerging_markets:
         name: Emerging Markets
         target_allocation: 30.0
 etfs:
