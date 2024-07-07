@@ -11,7 +11,7 @@ class ETF(BaseModel):
     enabled: bool
     quantity: float
     ter: float
-    classifications: Dict[str, str]
+    classifications: Dict[str, Dict[str, float]]
     investment: float = Field(default=0.0)
 
     @computed_field

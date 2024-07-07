@@ -24,7 +24,7 @@ class ConfigurationTest(unittest.TestCase):
         config_path = "tests/test_configs/valid.yml"
         config = configuration.parse(config_path)
         self.assertEqual(
-            2,
+            3,
             len(config.etfs),
             "The list of ETFs does not have the correct length!",
         )

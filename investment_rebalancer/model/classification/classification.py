@@ -1,4 +1,4 @@
-from typing import Dict
+from typing import List
 
 from pydantic import BaseModel
 
@@ -8,7 +8,7 @@ from investment_rebalancer.model.classification.category import Category
 class Classification(BaseModel):
     key: str
     name: str
-    categories: Dict[str, Category]
+    categories: List[Category]
 
     def __eq__(self, other: object) -> bool:
         """
