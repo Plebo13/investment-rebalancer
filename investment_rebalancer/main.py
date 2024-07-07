@@ -39,11 +39,11 @@ def main():
 
     config.invest(investment_value)
 
-    # # Print all ETF to invest in.
-    # print("\nETFs to invest in:")
-    # for etf in configuration.etfs.values():
-    #     if etf.investment > 0.0:
-    #         print(f"{etf.name}: {round(etf.investment)}€")
+    # * Print all ETF to invest in.
+    print("\nETFs to invest in:")
+    for etf in config.etfs:
+        if etf.investment > 0.0:
+            print(f"{etf.name}: {round(etf.investment)}€")
 
 
 if __name__ == "__main__":

@@ -1,5 +1,5 @@
 from functools import cached_property
-from typing import Dict
+from typing import Dict, List
 
 import sharepp
 from pydantic import BaseModel, Field, computed_field, field_validator
@@ -31,6 +31,19 @@ class ETF(BaseModel):
         if not sharepp.is_isin(isin):
             raise ValueError(f"{isin} is not a valid ISIN!")
         return isin
+
+    def get_all_categories(self) -> List[str]:
+        categories = []
+        for classification in self.classifications.values():
+            categories.extend(classification.keys())
+        return categories
+
+    def get_category_portion(self, category_key) -> float:
+        for classification in self.classifications.values():
+            for key, portion in classification.items():
+                if key == category_key:
+                    return portion
+        return 0.0
 
     def __eq__(self, other: object) -> bool:
         """Checks whether or not an object is equal to this instance.

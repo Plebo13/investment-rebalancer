@@ -37,4 +37,4 @@ requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
 
 [tool.poetry.scripts]
-my_package_cli = "investment_rebalancer.main:main"
+investment-rebalancer = "investment_rebalancer.main:main"
