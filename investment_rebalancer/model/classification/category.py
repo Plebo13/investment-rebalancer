@@ -40,8 +40,6 @@ class Category:
         :param other: the other object
         :return: true if the other object is equal, otherwise false
         """
-        if other == self:
-            return True
         if not isinstance(other, Category):
             return False
         return other.name == self.name
