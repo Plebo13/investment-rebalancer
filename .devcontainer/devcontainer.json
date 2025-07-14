@@ -2,7 +2,7 @@
   "name": "edgar",
   "image": "mcr.microsoft.com/devcontainers/python:3.12",
   "features": {
-    "ghcr.io/devcontainers-contrib/features/poetry:2": {
+    "ghcr.io/devcontainers-extra/features/poetry:2": {
       "version": "latest"
     }
   },
@@ -20,7 +20,8 @@
         "python.testing.pytestArgs": ["tests"],
         "python.testing.unittestEnabled": false,
         "python.testing.pytestEnabled": true,
-        "isort.args": ["--profile", "black"]
+        "isort.args": ["--profile", "black"],
+        "python.analysis.typeCheckingMode": "basic"
       },
       "extensions": [
         "njpwerner.autodocstring",
