@@ -1,3 +1,4 @@
+import locale
 import os
 from typing import List, Set
 from prettytable import PrettyTable
@@ -40,6 +41,13 @@ class Configuration(BaseModel):
                     return category
         raise ValueError(f"No category with key '{key}'!")
 
+    def get_investable_etfs(self, category_key: str) -> List[ETF]:
+        return [
+            etf
+            for etf in self.etfs
+            if etf.enabled and category_key in etf.get_all_categories()
+        ]
+
     def __get_all_categories(self) -> List[Category]:
         categories = []
         for classification in self.classifications:
@@ -50,9 +58,24 @@ class Configuration(BaseModel):
         return categories
 
     def print_current_allocation(self):
+        allocation_str = []
+
+        # * ETF table
+        table = PrettyTable(["ETF", "Quantity", "Price", "Value"])
+        for etf in self.etfs:
+            table.add_row(
+                [
+                    etf.name,
+                    f"{etf.quantity:.2f}",
+                    f"{etf.current_price:.2f}€",
+                    f"{etf.current_value:.2f}€",
+                ]
+            )
+        allocation_str.append(table.get_string(sortby="Value", reversesort=True))
+
+        # * Classification tables
         for classification in self.classifications:
-            print(f"{classification.name}:")
-            table = PrettyTable(["Category", "Value", "Allocation", "Target"])
+            table = PrettyTable(["Category", "Value", "Allocation", "Target", "Delta"])
             for category in classification.categories:
                 category_value = self.__get_category_value(category.key)
                 current_allocation = category_value / self.current_value * 100
@@ -62,11 +85,15 @@ class Configuration(BaseModel):
                         f"{category_value:.2f}€",
                         f"{current_allocation:.2f}%",
                         f"{category.target_allocation:.2f}%",
+                        f"{self.current_value*(current_allocation-category.target_allocation)/100:.2f}€",
                     ]
                 )
 
             table.align = "l"
-            print(table.get_string(sortby="Allocation", reversesort=True))
+            allocation_str.append(
+                f"{classification.name}:\n{table.get_string(sortby='Allocation', reversesort=True)}"
+            )
+        print("\n\n".join(allocation_str))
 
     def calculate_targets(self, investment_value: float):
         for classification in self.classifications:
@@ -96,7 +123,8 @@ class Configuration(BaseModel):
         investable_categories = self.__get_all_categories()
         while len(investable_categories) > 0 and round(investment_value, 2) > 0.0:
             investment_value = investable_categories[0].invest(
-                investment_value, self.etfs
+                investment_value,
+                self.get_investable_etfs(investable_categories[0].key),
             )
             investable_categories = self.__get_all_categories()
 
