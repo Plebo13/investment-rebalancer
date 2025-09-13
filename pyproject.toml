@@ -16,11 +16,10 @@ packages = [{ include = "investment_rebalancer" }]
 
 [tool.poetry.dependencies]
 python = "^3.10"
-prettytable = "^3.8.0"
-prompt-toolkit = "^3.0.39"
 pydantic = "^2.6.3"
 pydantic-yaml = "^1.2.1"
 pyyaml = "^6.0.1"
+pydantic-settings = "^2.10.1"
 
 [tool.poetry.group.dev.dependencies]
 isort = "^5.12.0"
