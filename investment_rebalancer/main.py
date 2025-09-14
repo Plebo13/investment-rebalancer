@@ -12,7 +12,6 @@ def main():
     for etf in config_yml["etfs"]:
         etf_list.append(parse_yaml_raw_as(ETF, str(etf)))
 
-    etf_list.calculate_current_allocations()
     etf_list.rebalance()
 
 

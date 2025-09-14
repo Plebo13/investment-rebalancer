@@ -6,11 +6,10 @@ from pydantic import BaseModel
 class ETF(BaseModel):
     name: str
     value: float
-    current_allocation: float = 0.0
     target_allocation: float
 
-    def get_allocation_diff(self) -> float:
-        return self.current_allocation-self.target_allocation
+    def get_value_difference(self, total_value: float) -> float:
+        return self.value-total_value*self.target_allocation
 
     def __eq__(self, other: object) -> bool:
         if not isinstance(other, ETF):
@@ -25,16 +24,10 @@ class ETFList(List[ETF]):
             result += etf.value
         return result
 
-    def calculate_current_allocations(self):
-        total_value = self.get_value()
-
-        for etf in self:
-            etf.current_allocation = round(etf.value/total_value, 4)
-
     def rebalance(self):
         min_etf = None
         for etf in self:
-            if not min_etf or etf.get_allocation_diff() < min_etf.get_allocation_diff():
+            if not min_etf or etf.get_value_difference(self.get_value()) < min_etf.get_value_difference(self.get_value()):
                 min_etf = etf
 
         assert isinstance(min_etf, ETF)
