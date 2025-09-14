@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "investment-rebalancer"
-version = "1.0.0"
+version = "1.0.1"
 description = "A simple tool helping you to calculate your portfolio rebalancing."
 authors = ["Lukas Brauckmann <lukas.brauckmann@gmail.com>"]
 maintainers = ["Lukas Brauckmann <lukas.brauckmann@gmail.com>"]
@@ -28,7 +28,7 @@ flake8 = ">=6,<8"
 
 [tool.poetry.group.test.dependencies]
 pytest = ">=7.4,<9.0"
-pytest-cov = "^4.1.0"
+pytest-cov = ">=4.1,<6.0"
 
 [build-system]
 requires = ["poetry-core"]
