@@ -1,8 +1,8 @@
 {
   "name": "edgar",
-  "image": "mcr.microsoft.com/devcontainers/python:3.11",
+  "image": "mcr.microsoft.com/devcontainers/python:3.12",
   "features": {
-    "ghcr.io/devcontainers-contrib/features/poetry:2": {
+    "ghcr.io/devcontainers-extra/features/poetry:2": {
       "version": "latest"
     }
   },
@@ -19,7 +19,9 @@
         "files.autoSave": "afterDelay",
         "python.testing.pytestArgs": ["tests"],
         "python.testing.unittestEnabled": false,
-        "python.testing.pytestEnabled": true
+        "python.testing.pytestEnabled": true,
+        "isort.args": ["--profile", "black"],
+        "python.analysis.typeCheckingMode": "basic"
       },
       "extensions": [
         "njpwerner.autodocstring",
@@ -29,7 +31,8 @@
         "ms-python.black-formatter",
         "esbenp.prettier-vscode",
         "ms-python.isort",
-        "codacy-app.codacy"
+        "codacy-app.codacy",
+        "redhat.vscode-yaml"
       ]
     }
   }
