@@ -4,7 +4,7 @@ import unittest
 from investment_rebalancer.model.asset.etf import ETF
 
 
-class ModelTest(unittest.TestCase):
+class ETFTest(unittest.TestCase):
     def test_invalid_isin(self):
         with self.assertRaises(ValueError) as cm:
             ETF(isin="1234", name="test etf", current_price=1.0, ter=0.1)
